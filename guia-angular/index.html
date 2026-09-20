@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guía de setup de Angular</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="page">
+
+    <header class="hero">
+      <p class="hero__eyebrow">Fase 2 — antes de crear el repo de Angular</p>
+      <h1 class="hero__title">Guía de setup de Angular</h1>
+      <p class="hero__subtitle">
+        Para el equipo de 4 personas del proyecto de aprendizaje (ver
+        <a href="../PLAN.md">PLAN.md</a>). Esta guía no crea el proyecto
+        todavía — eso pasa en la Fase 3. Aquí instalamos herramientas,
+        aprendemos los conceptos mínimos y dejamos claras las
+        decisiones de stack y convenciones que vamos a usar.
+      </p>
+    </header>
+
+    <nav class="toc" aria-label="Índice">
+      <p class="toc__title">Contenido</p>
+      <ol>
+        <li><a href="#conceptos">Conceptos clave de Angular</a></li>
+        <li><a href="#reparto">Reparto de componentes por persona</a></li>
+        <li><a href="#requisitos">Requisitos previos</a></li>
+        <li><a href="#cli">Instalar Angular CLI</a></li>
+        <li><a href="#proyecto">Crear el proyecto (referencia para la Fase 3)</a></li>
+        <li><a href="#estructura">Estructura de carpetas</a></li>
+        <li><a href="#comandos">Comandos del día a día</a></li>
+        <li><a href="#stack">Stack y convenciones del equipo</a></li>
+        <li><a href="#git">Flujo de Git</a></li>
+        <li><a href="#checklist">Checklist antes de la Fase 3</a></li>
+      </ol>
+    </nav>
+
+    <!-- ================================================== -->
+    <section class="section" id="conceptos">
+      <h2 class="section__title">1. Conceptos clave de Angular</h2>
+      <p>
+        Antes de instalar nada, conviene tener claro el vocabulario básico.
+        Todo esto lo vas a ver en código real en la Fase 3, pero es más
+        fácil si ya sabes qué es qué.
+      </p>
+
+      <h3>¿Qué es Angular?</h3>
+      <p>
+        Angular es un framework para construir aplicaciones web de una sola
+        página (<strong>SPA</strong>, Single Page Application): el navegador
+        carga la app una vez y luego Angular se encarga de mostrar distintas
+        "pantallas" sin recargar la página completa. Se escribe en
+        <strong>TypeScript</strong> (JavaScript con tipos).
+      </p>
+
+      <h3>Componentes</h3>
+      <p>
+        Un componente es una pieza de interfaz reutilizable: su HTML, su
+        CSS/SCSS y su lógica (TypeScript) viven juntos en una carpeta. Esto
+        te va a sonar familiar: es exactamente la misma idea que usamos al
+        repartir el maquetado en la Fase 1. Cada bloque que ya construimos
+        se vuelve un componente:
+      </p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Bloque del maquetado (Fase 1)</th><th>Futuro componente Angular</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>App shell / layout</td><td><code>AppShellComponent</code></td></tr>
+            <tr><td>Sidebar — lista de chats</td><td><code>ChatListComponent</code></td></tr>
+            <tr><td>Header del chat activo</td><td><code>ChatHeaderComponent</code></td></tr>
+            <tr><td>Hilo de mensajes</td><td><code>MessageThreadComponent</code></td></tr>
+            <tr><td>Barra de entrada</td><td><code>MessageInputComponent</code></td></tr>
+            <tr><td>Panel de info de contacto (TV)</td><td><code>ContactInfoComponent</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Componentes standalone (lo que vamos a usar)</h3>
+      <p>
+        Angular tenía antes un sistema de "módulos" (<code>NgModule</code>)
+        obligatorio para agrupar componentes. Desde hace un par de versiones
+        existen los <strong>componentes standalone</strong>, que no
+        necesitan módulo: cada componente declara directamente qué otras
+        piezas usa. Es más simple de entender para gente nueva, y es el
+        default en Angular moderno — por eso es lo que vamos a usar.
+      </p>
+
+      <h3>Templates y data binding</h3>
+      <p>El HTML de un componente puede "conectarse" con su lógica de tres formas básicas:</p>
+      <ul>
+        <li><strong>Interpolación</strong> — mostrar un valor: <code>&lcub;&lcub; nombreContacto &rcub;&rcub;</code></li>
+        <li><strong>Property binding</strong> — pasar un valor a un atributo: <code>[src]="avatarUrl"</code></li>
+        <li><strong>Event binding</strong> — reaccionar a una acción del usuario: <code>(click)="enviarMensaje()"</code></li>
+      </ul>
+
+      <h3>Signals (estado reactivo)</h3>
+      <p>
+        Un <strong>signal</strong> es una caja que guarda un valor y avisa
+        automáticamente a la interfaz cuando ese valor cambia — por ejemplo,
+        la lista de mensajes de un chat. Es la forma moderna y más simple de
+        manejar estado en Angular, y es la que vamos a usar (ver
+        <a href="#stack">Stack y convenciones</a>).
+      </p>
+
+      <h3>Servicios</h3>
+      <p>
+        Un servicio es una clase de TypeScript que contiene lógica que no
+        pertenece a un componente en particular — por ejemplo, la que
+        obtiene los mensajes de un chat. Los componentes "piden" un
+        servicio en vez de crearlo ellos mismos; Angular se los entrega
+        (esto se llama inyección de dependencias). Por ahora basta con
+        saber que existen.
+      </p>
+
+      <h3>Angular CLI</h3>
+      <p>
+        El CLI (<em>Command Line Interface</em>) es la herramienta de línea
+        de comandos que crea el proyecto, genera componentes, levanta el
+        servidor de desarrollo y compila la app para producción. Casi todo
+        lo que hacemos en esta guía pasa por el comando <code>ng</code>.
+      </p>
+    </section>
+
+    <!-- ================================================== -->
+    <section class="section" id="reparto">
+      <h2 class="section__title">2. Reparto de componentes por persona</h2>
+      <p>
+        Mismo reparto que ya usamos para el maquetado en la Fase 1 (ver
+        <a href="../PLAN.md">PLAN.md</a>), aplicado ahora a los componentes
+        de Angular que se van a crear en la Fase 3. Cada quien es dueño de
+        su carpeta dentro de <code>src/app/</code>: crea sus propios
+        archivos con <code>ng generate component</code> (ver
+        <a href="#comandos">Comandos del día a día</a>) y trabaja en su
+        propia rama de Git (ver <a href="#git">Flujo de Git</a>).
+      </p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Persona</th><th>Componente(s) Angular</th><th>Carpeta en <code>src/app/</code></th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>1</strong> (integrador/a)</td>
+              <td><code>AppShellComponent</code>, <code>ContactInfoComponent</code>, navegación adaptativa</td>
+              <td><code>app-shell/</code>, <code>contact-info/</code></td>
+            </tr>
+            <tr>
+              <td><strong>2</strong></td>
+              <td><code>ChatListComponent</code> (+ <code>ChatListItemComponent</code>)</td>
+              <td><code>chat-list/</code></td>
+            </tr>
+            <tr>
+              <td><strong>3</strong></td>
+              <td><code>ChatHeaderComponent</code>, <code>MessageInputComponent</code></td>
+              <td><code>chat-header/</code>, <code>message-input/</code></td>
+            </tr>
+            <tr>
+              <td><strong>4</strong></td>
+              <td><code>MessageThreadComponent</code> (+ <code>MessageBubbleComponent</code>)</td>
+              <td><code>message-thread/</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note">
+        <strong>Por qué el mismo reparto:</strong> cada persona ya conoce
+        su bloque de HTML/SCSS del maquetado — migrarlo a un componente
+        Angular es más simple si es la misma persona que lo diseñó
+        quien lo convierte, en vez de repartir de cero.
+      </div>
+      <p>
+        La persona 1, además de sus propios componentes, es quien deja
+        listo el esqueleto del proyecto (Fase 3) para que los demás
+        empiecen a trabajar sobre él — por eso le tocan las piezas
+        "estructurales" (el shell de la app y la navegación adaptativa
+        entre dispositivos).
+      </p>
+    </section>
+
+    <!-- ================================================== -->
+    <section class="section" id="requisitos">
+      <h2 class="section__title">3. Requisitos previos</h2>
+      <p>Instala esto en orden. Cada quien lo hace en su propia máquina.</p>
+
+      <h3>1. Node.js (versión LTS)</h3>
+      <p>
+        Angular necesita Node.js para funcionar (el CLI corre sobre Node, y
+        Node trae <code>npm</code>, el gestor de paquetes que usamos para
+        instalar todo lo demás). Instala la versión <strong>LTS</strong>
+        (Long Term Support, la recomendada, no la "más nueva").
+      </p>
+      <p>
+        Recomendado: instalar Node con <strong>nvm</strong> (Node Version
+        Manager) en vez del instalador oficial. Permite tener varias
+        versiones de Node y cambiar entre ellas, lo cual evita problemas si
+        más adelante otro proyecto necesita una versión distinta.
+      </p>
+      <pre><code># macOS / Linux — instalar nvm
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+
+# Cierra y vuelve a abrir la terminal, luego:
+nvm install --lts
+nvm use --lts</code></pre>
+      <p>
+        En Windows, usa
+        <a href="https://github.com/coreybutler/nvm-windows" target="_blank" rel="noopener">nvm-windows</a>
+        o, si prefieres algo más simple, el instalador oficial desde
+        <a href="https://nodejs.org" target="_blank" rel="noopener">nodejs.org</a> (elige la versión LTS).
+      </p>
+      <p>Verifica que quedó instalado:</p>
+      <pre><code>node -v
+npm -v</code></pre>
+      <div class="note">
+        <strong>Nota:</strong> no importa memorizar el número exacto de
+        versión. Solo confirma que <code>node -v</code> responde con algo
+        como <code>v20.x.x</code> o <code>v22.x.x</code> (una LTS reciente)
+        y no da error de "comando no encontrado".
+      </div>
+
+      <h3>2. Editor: VS Code + extensiones</h3>
+      <p>
+        Usamos <a href="https://code.visualstudio.com" target="_blank" rel="noopener">Visual Studio Code</a>.
+        Instala estas extensiones (desde la pestaña de Extensiones, ícono de cuadritos en la barra lateral):
+      </p>
+      <ul>
+        <li><strong>Angular Language Service</strong> (autocompletado y errores dentro de los templates HTML de Angular)</li>
+        <li><strong>ESLint</strong> (avisa de problemas de código mientras escribes)</li>
+        <li><strong>Prettier - Code formatter</strong> (formatea el código automáticamente)</li>
+      </ul>
+
+      <h3>3. Git</h3>
+      <p>Confirma que ya lo tienes instalado (todos lo necesitamos, ya lo usamos en la Fase 1):</p>
+      <pre><code>git --version</code></pre>
+    </section>
+
+    <!-- ================================================== -->
+    <section class="section" id="cli">
+      <h2 class="section__title">4. Instalar Angular CLI</h2>
+      <p>Con Node ya instalado, instala el CLI de Angular de forma global (una sola vez por máquina):</p>
+      <pre><code>npm install -g @angular/cli</code></pre>
+      <p>Verifica que quedó instalado:</p>
+      <pre><code>ng version</code></pre>
+      <p>
+        Esto debería mostrar la versión del Angular CLI, de Node, y del
+        paquete de administrador de paquetes que estés usando. Si ves un
+        error de permisos en macOS/Linux, evita usar <code>sudo</code>; es
+        señal de que Node se instaló con permisos raros — normalmente se
+        resuelve reinstalando Node con nvm (paso anterior).
+      </p>
+    </section>
+
+    <!-- ================================================== -->
+    <section class="section" id="proyecto">
+      <h2 class="section__title">5. Crear el proyecto (referencia para la Fase 3)</h2>
+      <p>
+        Este paso <strong>no lo hacemos todavía</strong> — lo hará quien
+        cree el repo base en la Fase 3. Se documenta aquí para que todos
+        entiendan qué comando se va a correr y por qué, antes de que
+        exista.
+      </p>
+      <pre><code>npx @angular/cli@latest new chat-equipo --style=scss --routing</code></pre>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Opción</th><th>Qué hace</th></tr></thead>
+          <tbody>
+            <tr><td><code>--style=scss</code></td><td>Usa SCSS en vez de CSS plano en cada componente (igual que en el maquetado de la Fase 1)</td></tr>
+            <tr><td><code>--routing</code></td><td>Agrega Angular Router desde el inicio, para navegar entre pantallas</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>
+        No hace falta pasar una opción para "standalone": en las versiones
+        recientes de Angular, los componentes standalone (ver
+        <a href="#conceptos">Conceptos clave</a>) ya son el comportamiento
+        por defecto de <code>ng new</code> y <code>ng generate</code>.
+      </p>
+      <p>Una vez creado, para levantar el servidor de desarrollo:</p>
+      <pre><code>cd chat-equipo
+ng serve</code></pre>
+      <p>y abrir <code>http://localhost:4200</code> en el navegador.</p>
+    </section>
+
+    <!-- ================================================== -->
+    <section class="section" id="estructura">
+      <h2 class="section__title">6. Estructura de carpetas</h2>
+      <p>Así se ve un proyecto Angular recién creado (lo esencial):</p>
+      <pre><code>chat-equipo/
+├── src/
+│   ├── app/
+│   │   ├── app.component.ts        # componente raíz
+│   │   ├── app.component.html
+│   │   ├── app.component.scss
+│   │   ├── app.config.ts           # configuración de la app (router, etc.)
+│   │   └── app.routes.ts           # definición de rutas
+│   ├── assets/                     # imágenes, íconos, etc.
+│   ├── styles.scss                 # estilos globales (equivalente a nuestro main.scss)
+│   └── index.html
+├── angular.json                    # configuración del proyecto/CLI
+├── package.json                    # dependencias y scripts
+└── tsconfig.json                   # configuración de TypeScript</code></pre>
+      <p>
+        En la Fase 3, dentro de <code>src/app/</code> vamos a crear una
+        carpeta por componente (siguiendo el reparto de la Fase 1):
+        <code>chat-list/</code>, <code>chat-header/</code>,
+        <code>message-thread/</code>, <code>message-input/</code>, etc.
+        Cada carpeta de componente trae junto su <code>.ts</code>,
+        <code>.html</code> y <code>.scss</code> — el mismo principio de
+        "todo lo de un componente vive junto" que ya usamos en el
+        maquetado.
+      </p>
+    </section>
+
+    <!-- ================================================== -->
+    <section class="section" id="comandos">
+      <h2 class="section__title">7. Comandos del día a día</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Comando</th><th>Para qué sirve</th></tr></thead>
+          <tbody>
+            <tr><td><code>ng serve</code></td><td>Levanta el servidor de desarrollo con recarga automática</td></tr>
+            <tr><td><code>ng generate component nombre</code><br><span>(o <code>ng g c nombre</code>)</span></td><td>Crea un componente nuevo con su carpeta, HTML, SCSS y TypeScript</td></tr>
+            <tr><td><code>ng generate service nombre</code><br><span>(o <code>ng g s nombre</code>)</span></td><td>Crea un servicio nuevo</td></tr>
+            <tr><td><code>ng build</code></td><td>Compila la app para producción (carpeta <code>dist/</code>)</td></tr>
+            <tr><td><code>ng test</code></td><td>Corre las pruebas unitarias</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note">
+        <strong>Tip:</strong> no hace falta memorizar esto. El comando que
+        más vas a usar es <code>ng generate component nombre-del-componente</code>
+        cada vez que empieces uno nuevo.
+      </div>
+    </section>
+
+    <!-- ================================================== -->
+    <section class="section" id="stack">
+      <h2 class="section__title">8. Stack y convenciones del equipo</h2>
+      <p>Decisiones ya tomadas para que en la Fase 3 no haya que discutirlas de nuevo:</p>
+      <ul>
+        <li><strong>Componentes standalone</strong>, no <code>NgModule</code> (ver <a href="#conceptos">Conceptos clave</a>)</li>
+        <li><strong>SCSS</strong> para estilos, un archivo por componente — igual que en el maquetado</li>
+        <li><strong>Angular Router</strong> para navegar entre la lista de chats y una conversación</li>
+        <li><strong>Signals</strong> para el estado (mensajes, chat activo, etc.), en vez de librerías externas como NgRx — para un proyecto de aprendizaje, es más que suficiente y más fácil de entender</li>
+        <li><strong>ESLint + Prettier</strong> para mantener el código consistente entre los 4</li>
+      </ul>
+
+      <h3>Nomenclatura de archivos</h3>
+      <p>Angular tiene una convención de nombres que el CLI ya sigue automáticamente:</p>
+      <ul>
+        <li>Carpetas y archivos en <code>kebab-case</code>: <code>chat-header/</code></li>
+        <li>Sufijo según el tipo: <code>chat-header.component.ts</code>, <code>chat.service.ts</code></li>
+        <li>Nombres de clase en <code>PascalCase</code>: <code>ChatHeaderComponent</code></li>
+      </ul>
+      <p>Si siempre creas archivos con <code>ng generate</code>, esto sale gratis — el CLI los nombra por ti.</p>
+    </section>
+
+    <!-- ================================================== -->
+    <section class="section" id="git">
+      <h2 class="section__title">9. Flujo de Git</h2>
+      <p>Mismo espíritu que usamos en el maquetado: una rama por persona/componente, PR para integrar.</p>
+
+      <h3>Nombres de rama</h3>
+      <pre><code>feature/chat-list
+feature/chat-header
+feature/message-thread
+feature/message-input</code></pre>
+
+      <h3>Mensajes de commit</h3>
+      <p>Un prefijo corto que dice qué tipo de cambio es, seguido de una descripción breve en español:</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Prefijo</th><th>Cuándo usarlo</th></tr></thead>
+          <tbody>
+            <tr><td><code>feat:</code></td><td>Funcionalidad nueva</td></tr>
+            <tr><td><code>fix:</code></td><td>Corrección de un bug</td></tr>
+            <tr><td><code>style:</code></td><td>Cambios de estilos/CSS que no afectan lógica</td></tr>
+            <tr><td><code>refactor:</code></td><td>Reordenar código sin cambiar el comportamiento</td></tr>
+            <tr><td><code>docs:</code></td><td>Cambios de documentación (como esta guía)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <pre><code>git checkout -b feature/chat-header
+git add .
+git commit -m "feat: agregar componente de header del chat"
+git push -u origin feature/chat-header</code></pre>
+      <p>Después se abre un Pull Request hacia <code>main</code> y alguien más del equipo lo revisa antes de integrarlo.</p>
+    </section>
+
+    <!-- ================================================== -->
+    <section class="section" id="checklist">
+      <h2 class="section__title">10. Checklist antes de la Fase 3</h2>
+      <ul class="checklist">
+        <li><input type="checkbox" id="chk-node" /><label for="chk-node">Node.js LTS instalado (<code>node -v</code> funciona)</label></li>
+        <li><input type="checkbox" id="chk-cli" /><label for="chk-cli">Angular CLI instalado (<code>ng version</code> funciona)</label></li>
+        <li><input type="checkbox" id="chk-vscode" /><label for="chk-vscode">VS Code con Angular Language Service, ESLint y Prettier</label></li>
+        <li><input type="checkbox" id="chk-git" /><label for="chk-git">Git instalado y acceso al repositorio del equipo</label></li>
+        <li><input type="checkbox" id="chk-conceptos" /><label for="chk-conceptos">Leíste la sección de conceptos clave (componente, standalone, signal)</label></li>
+      </ul>
+      <div class="warning">
+        <strong>Antes de seguir:</strong> las 4 personas deben completar
+        este checklist. La Fase 3 crea el repo base y solo tiene sentido
+        una vez que todos pueden correr <code>ng serve</code> en su
+        máquina.
+      </div>
+    </section>
+
+    <footer class="footer">
+      Fase 2 del plan de aprendizaje de Angular — ver <a href="../PLAN.md">PLAN.md</a> y el maquetado de la <a href="../maquetado/">Fase 1</a>.
+    </footer>
+  </div>
+</body>
+</html>

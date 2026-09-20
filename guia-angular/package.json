@@ -1,0 +1,12 @@
+{
+  "name": "guia-angular",
+  "private": true,
+  "description": "Guía de setup de Angular (Fase 2 del plan, ver ../PLAN.md). Un HTML + un SCSS.",
+  "scripts": {
+    "build:css": "sass scss/styles.scss css/styles.css --no-source-map",
+    "watch:css": "sass --watch scss/styles.scss css/styles.css --no-source-map"
+  },
+  "devDependencies": {
+    "sass": "^1.77.0"
+  }
+}

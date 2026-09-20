@@ -6,6 +6,12 @@
       "runtimeExecutable": "python3",
       "runtimeArgs": ["-m", "http.server", "4500", "--directory", "maquetado"],
       "port": 4500
+    },
+    {
+      "name": "guia-angular",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "4600", "--directory", "guia-angular"],
+      "port": 4600
     }
   ]
 }
