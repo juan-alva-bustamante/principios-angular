@@ -12,7 +12,7 @@ No se salta directo a Angular. Se avanza en 3 fases secuenciales, cada una valid
 |---|---|---|---|
 | 1 | Maquetado HTML/SCSS del chat, dividido por componentes | ✅ Hecho | [`maquetado/`](maquetado/) |
 | 2 | Guía de setup de Angular: conceptos, instalación de herramientas, componentes, convenciones | ✅ Hecho | [`guia-angular/`](guia-angular/) |
-| 3 | Repo base de Angular (creado a partir de lo definido en la Fase 2), con la estructura de componentes lista para integrar cada parte | ⬜ Pendiente | — |
+| 3 | Repo base de Angular — el [tutorial paso a paso](guia-angular/tutorial-paso-a-paso.html) ya está listo; falta ejecutarlo y que el proyecto Angular exista en el repo | ⬜ Pendiente | — |
 
 ## Estructura del repositorio
 
@@ -62,6 +62,8 @@ El repo está publicado con **GitHub Pages** — ábrelo directo, con estilos, s
 
 - Maquetado (Fase 1): **https://juan-alva-bustamante.github.io/principios-angular/maquetado/**
 - Guía de Angular (Fase 2): **https://juan-alva-bustamante.github.io/principios-angular/guia-angular/**
+- Diagrama de componentes: **https://juan-alva-bustamante.github.io/principios-angular/guia-angular/diagrama-componentes.html**
+- Tutorial paso a paso (Fase 3): **https://juan-alva-bustamante.github.io/principios-angular/guia-angular/tutorial-paso-a-paso.html**
 
 (Los visores externos tipo "GitHub HTML preview" no funcionan bien aquí: sirven el HTML pero no resuelven las rutas relativas al CSS. Usa los links de arriba en su lugar.)
 

@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tutorial paso a paso: de cero al proyecto Angular</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="page">
+
+    <header class="hero">
+      <p class="hero__eyebrow">Fase 3 — tutorial completo, sin saltarse nada</p>
+      <h1 class="hero__title">De cero al proyecto Angular funcionando</h1>
+      <p class="hero__subtitle">
+        Esta guía asume que nunca has usado una terminal ni instalado
+        herramientas de programación. Vamos a instalar todo, crear el
+        proyecto, y migrar cada pieza del <a href="../maquetado/">maquetado</a>
+        a su componente de Angular, uno por uno, validando visualmente en
+        el navegador después de cada paso. Instrucciones para Windows
+        (con notas para Mac donde cambia algo importante).
+      </p>
+    </header>
+
+    <nav class="toc" aria-label="Índice">
+      <p class="toc__title">Contenido</p>
+      <ol>
+        <li><a href="#parte1">Parte 1 — Instalar los programas necesarios</a></li>
+        <li><a href="#parte2">Parte 2 — Verificar que todo quedó instalado</a></li>
+        <li><a href="#parte3">Parte 3 — Instalar el Angular CLI</a></li>
+        <li><a href="#parte4">Parte 4 — Descargar el proyecto</a></li>
+        <li><a href="#parte5">Parte 5 — Crear el proyecto Angular</a></li>
+        <li><a href="#parte6">Parte 6 — Preparar los estilos compartidos</a></li>
+        <li><a href="#parte7">Parte 7 — Construir cada componente</a></li>
+        <li><a href="#parte8">Parte 8 — Validación visual final</a></li>
+        <li><a href="#parte9">Parte 9 — Guardar y subir tu trabajo</a></li>
+        <li><a href="#siguientes">¿Qué sigue?</a></li>
+      </ol>
+    </nav>
+
+    <!-- ================================================== -->
+    <section class="section" id="parte1">
+      <h2 class="section__title">Parte 1 — Instalar los programas necesarios</h2>
+      <p>Vamos a instalar 3 programas. Uno a la vez, en este orden.</p>
+
+      <h3>1.1 — Node.js</h3>
+      <p>Es el programa que hace correr las herramientas de Angular.</p>
+      <ol>
+        <li>Abre tu navegador (Chrome, Edge, el que tengas) y ve a <code>nodejs.org</code></li>
+        <li>Vas a ver un botón grande que dice algo como "Download Node.js (LTS)" — dale clic ahí. <strong>Elige siempre la versión que diga "LTS"</strong>, no la que diga "Current".</li>
+        <li>Se descarga un archivo (normalmente a tu carpeta "Descargas"). Ábrelo con doble clic.</li>
+        <li>Se abre un instalador: dale "Next" en cada pantalla, acepta los términos, y deja todas las opciones tal como vienen. Al final, clic en "Install" y luego "Finish".</li>
+      </ol>
+      <div class="note">
+        <strong>Nota:</strong> si tu computadora te pide permiso de administrador durante la instalación, acepta (dale "Sí").
+      </div>
+
+      <h3>1.2 — Visual Studio Code</h3>
+      <p>Es el editor donde vamos a escribir y ver el código (como un "Word" pero para programar).</p>
+      <ol>
+        <li>Ve a <code>code.visualstudio.com</code></li>
+        <li>Clic en el botón de descarga para tu sistema (Windows o Mac)</li>
+        <li>Abre el instalador descargado</li>
+        <li>En Windows, cuando llegues a la pantalla "Selecciona tareas adicionales", asegúrate de que esté marcada la casilla <strong>"Agregar a PATH"</strong> (normalmente ya viene marcada por defecto) — esto es importante, lo vamos a necesitar más adelante</li>
+        <li>Termina la instalación con "Next" → "Install" → "Finish"</li>
+      </ol>
+
+      <h3>1.3 — Git</h3>
+      <p>Es la herramienta que guarda el historial de cambios de tu proyecto y lo sube a GitHub.</p>
+      <ol>
+        <li>Ve a <code>git-scm.com/downloads</code> y descarga la versión para tu sistema</li>
+        <li>Abre el instalador</li>
+        <li>Vas a ver muchas pantallas con opciones — <strong>no cambies nada, dale "Next" a todas hasta el final</strong> (son como 10 pantallas, es normal)</li>
+        <li>Al final, "Install" y "Finish"</li>
+      </ol>
+    </section>
+
+    <!-- ================================================== -->
+    <section class="section" id="parte2">
+      <h2 class="section__title">Parte 2 — Verificar que todo quedó instalado</h2>
+      <p>
+        Vamos a abrir una <strong>terminal</strong>: una ventana donde le
+        escribes comandos de texto a la computadora en vez de hacer clic
+        en botones. Es la herramienta principal que vamos a usar en todo
+        este tutorial.
+      </p>
+
+      <h3>Abrir la terminal (cmd) en Windows</h3>
+      <ol>
+        <li>Busca el ícono de lupa 🔍 en la barra de tareas (abajo de tu pantalla), o presiona la tecla con el logo de Windows</li>
+        <li>Escribe: <code>cmd</code></li>
+        <li>Va a aparecer una app llamada <strong>"Símbolo del sistema"</strong> — dale clic o presiona Enter</li>
+        <li>Se abre una ventana con fondo negro y texto — esa es tu terminal</li>
+      </ol>
+      <div class="note">
+        <strong>Si usas Mac:</strong> abre "Spotlight" (Cmd + Espacio), escribe <code>terminal</code> y presiona Enter.
+      </div>
+
+      <h3>Probar que Node, npm y Git funcionan</h3>
+      <p>En la ventana de la terminal, escribe cada línea y presiona Enter después de cada una:</p>
+      <pre><code>node -v
+npm -v
+git --version</code></pre>
+      <p>
+        Cada comando debería responder con un número de versión (algo como
+        <code>v20.11.0</code>). No importa memorizar el número exacto — lo
+        que importa es que NO diga algo como "no se reconoce como un
+        comando interno o externo".
+      </p>
+      <div class="warning">
+        <strong>Si te da error:</strong> cierra la terminal, cierra la
+        sesión de Windows (o reinicia la computadora), y vuelve a intentar
+        el paso de "Abrir la terminal" de arriba. A veces Windows necesita
+        reiniciar para "enterarse" de que estos programas ya existen.
+      </div>
+    </section>
+
+    <!-- ================================================== -->
+    <section class="section" id="parte3">
+      <h2 class="section__title">Parte 3 — Instalar el Angular CLI</h2>
+      <p>
+        El Angular CLI es la herramienta que crea proyectos y componentes
+        de Angular por ti. Se instala una sola vez por computadora.
+      </p>
+      <p>En la misma terminal, escribe:</p>
+      <pre><code>npm install -g @angular/cli</code></pre>
+      <p>
+        Presiona Enter. Va a pasar mucho texto rápido por la pantalla —
+        es normal, tarda 1 o 2 minutos. Cuando termine, vas a ver de nuevo
+        el cursor esperando (una línea con una ruta de carpeta y un
+        símbolo al final, algo como <code>C:\Users\TuNombre&gt;</code>).
+      </p>
+      <p>Verifica que quedó instalado:</p>
+      <pre><code>ng version</code></pre>
+      <p>Debería mostrarte un pequeño dibujo hecho con texto y la versión del Angular CLI.</p>
+    </section>
+
+    <!-- ================================================== -->
+    <section class="section" id="parte4">
+      <h2 class="section__title">Parte 4 — Descargar el proyecto</h2>
+      <p>
+        Vamos a descargar (esto se llama "clonar") el repositorio que ya
+        tiene el <a href="../maquetado/">maquetado</a> y esta guía, para
+        trabajar sobre él.
+      </p>
+      <ol>
+        <li>
+          Elige dónde quieres guardar el proyecto. Por ejemplo, tu carpeta
+          de Documentos. En la terminal, escribe:
+          <pre><code>cd Documents</code></pre>
+          (<code>cd</code> significa "entra a esta carpeta". Si tu carpeta se llama "Documentos" en vez de "Documents", usa ese nombre.)
+        </li>
+        <li>
+          Descarga el proyecto:
+          <pre><code>git clone https://github.com/juan-alva-bustamante/principios-angular.git</code></pre>
+        </li>
+        <li>
+          Entra a la carpeta que se acaba de crear:
+          <pre><code>cd principios-angular</code></pre>
+        </li>
+      </ol>
+      <div class="note">
+        <strong>Ya tienes el repo en tu máquina si estuviste trabajando con Claude en él:</strong>
+        si es el caso, sáltate este paso y solo asegúrate de estar, en la
+        terminal, parado dentro de la carpeta <code>principios-angular</code>
+        (usa <code>cd</code> para llegar ahí).
+      </div>
+    </section>
+
+    <!-- ================================================== -->
+    <section class="section" id="parte5">
+      <h2 class="section__title">Parte 5 — Crear el proyecto Angular</h2>
+      <p>Estando dentro de la carpeta <code>principios-angular</code>, escribe:</p>
+      <pre><code>ng new chat-app --style=scss --routing</code></pre>
+      <p>
+        Puede que te haga una o dos preguntas de sí/no en la terminal
+        (por ejemplo sobre "Server-Side Rendering"). Para todas, solo
+        presiona Enter para aceptar la opción por defecto.
+      </p>
+      <p>Espera 1-2 minutos mientras instala todo. Cuando termine, entra a la nueva carpeta:</p>
+      <pre><code>cd chat-app</code></pre>
+
+      <h3>5.1 — Abrir el proyecto en Visual Studio Code</h3>
+      <pre><code>code .</code></pre>
+      <p>
+        (El punto es parte del comando — significa "abre esta carpeta
+        donde estoy parado ahora"). Se abre Visual Studio Code con el
+        proyecto cargado a la izquierda.
+      </p>
+      <p>
+        Desde ahora vamos a usar la terminal <strong>dentro de VS Code</strong>,
+        no la ventana negra de antes. Para abrirla: menú
+        <strong>Terminal</strong> (arriba) → <strong>New Terminal</strong>.
+      </p>
+
+      <h3>5.2 — Primera validación visual</h3>
+      <p>En la terminal de VS Code, escribe:</p>
+      <pre><code>ng serve</code></pre>
+      <p>
+        Espera a que aparezca un mensaje como <code>Local: http://localhost:4200/</code>.
+        Abre tu navegador y ve a esa dirección.
+      </p>
+      <div class="note">
+        <strong>✅ Validación:</strong> deberías ver una página con el
+        texto "Hello, chat-app" y un logo de Angular. Si ves eso, el
+        proyecto está funcionando correctamente.
+      </div>
+      <p>
+        Deja esa terminal abierta y corriendo — <code>ng serve</code> se
+        queda "vigilando" tus archivos y recarga el navegador solo cuando
+        guardas cambios. Para los siguientes comandos, abre una
+        <strong>segunda terminal</strong>: clic en el ícono <code>+</code>
+        que aparece junto a la terminal, en VS Code.
+      </p>
+    </section>
+
+    <!-- ================================================== -->
+    <section class="section" id="parte6">
+      <h2 class="section__title">Parte 6 — Preparar los estilos compartidos</h2>
+      <p>
+        Antes de crear componentes, copiamos 3 cosas que van a usar
+        varios componentes a la vez: los "tokens" de diseño (colores,
+        tipografía), y los estilos globales (reset + avatares).
+      </p>
+
+      <h3>6.1 — Agregar la tipografía (Google Fonts)</h3>
+      <p>
+        En el panel de archivos de VS Code (izquierda), abre
+        <code>src/index.html</code>. Justo antes de la línea
+        <code>&lt;/head&gt;</code>, pega esto:
+      </p>
+      <pre><code>&lt;link rel="preconnect" href="https://fonts.googleapis.com" /&gt;
+&lt;link rel="preconnect" href="https://fonts.gstatic.com" crossorigin /&gt;
+&lt;link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet" /&gt;</code></pre>
+      <p>Guarda el archivo (Ctrl+S).</p>
+
+      <h3>6.2 — Carpeta compartida de variables</h3>
+      <ol>
+        <li>Clic derecho sobre la carpeta <code>src/app</code> (panel izquierdo) → <strong>New Folder</strong> → escribe <code>shared</code></li>
+        <li>Clic derecho sobre <code>shared</code> → <strong>New File</strong> → escribe <code>_variables.scss</code></li>
+        <li>Pega este contenido completo y guarda:</li>
+      </ol>
+      <pre><code>// Tokens de diseño — colores, tipografía, espaciado, breakpoints
+$color-bg:              #F7F7F5;
+$color-surface:         #FFFFFF;
+$color-border:          #E4E7EB;
+
+$color-primary:         #3D5A80;
+$color-primary-dark:    #293241;
+$color-accent:          #EE6C4D;
+
+$color-text:            #1B1B1F;
+$color-text-muted:      #6B7280;
+$color-text-on-primary: #FFFFFF;
+
+$color-bubble-received: #EEF0F3;
+$color-online:          #2E9E5B;
+
+$avatar-colors: (
+  1: #3D5A80,
+  2: #EE6C4D,
+  3: #7A9E7E,
+  4: #9B5DE5,
+  5: #E0A458,
+  6: #4D8FAC,
+);
+
+$font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+$font-size-sm:  0.8125rem;
+$font-size-base: 0.9375rem;
+$font-size-md:  1.0625rem;
+$font-size-lg:  1.375rem;
+
+$space-1: 0.25rem;
+$space-2: 0.5rem;
+$space-3: 0.75rem;
+$space-4: 1rem;
+$space-5: 1.5rem;
+$space-6: 2rem;
+
+$radius-sm: 8px;
+$radius-md: 14px;
+$radius-full: 999px;
+
+$transition-fast: 120ms ease;
+
+$bp-watch-max: 260px;
+$bp-tablet:    600px;
+$bp-car:       1024px;
+$bp-tv:        1281px;</code></pre>
+      <p>
+        Repite: nuevo archivo dentro de <code>shared</code> llamado
+        <code>_mixins.scss</code>, con este contenido:
+      </p>
+      <pre><code>@use 'variables' as *;
+
+@mixin bp-watch-only {
+  @media (max-width: $bp-watch-max) {
+    @content;
+  }
+}
+
+@mixin bp-tablet-up {
+  @media (min-width: $bp-tablet) {
+    @content;
+  }
+}
+
+@mixin bp-car-up {
+  @media (min-width: $bp-car) {
+    @content;
+  }
+}
+
+@mixin bp-tv-up {
+  @media (min-width: $bp-tv) {
+    @content;
+  }
+}</code></pre>
+
+      <h3>6.3 — Estilos globales</h3>
+      <p>
+        Abre el archivo <code>src/styles.scss</code> (ya existe, viene
+        vacío). Reemplaza TODO su contenido por esto:
+      </p>
+      <pre><code>@use 'app/shared/variables' as *;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: $font-family;
+  font-size: $font-size-base;
+  color: $color-text;
+  background: $color-bg;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, p {
+  margin: 0;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+button {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 2px solid $color-primary;
+  outline-offset: 2px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+// Avatar de iniciales: lo comparten ChatListComponent y ChatHeaderComponent,
+// por eso vive aquí (global) y no dentro de un componente.
+.avatar {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: $radius-full;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: $color-text-on-primary;
+  position: relative;
+}
+
+@each $index, $color in $avatar-colors {
+  .avatar--#{$index} {
+    background: $color;
+  }
+}
+
+.avatar__status {
+  position: absolute;
+  bottom: -1px;
+  right: -1px;
+  width: 12px;
+  height: 12px;
+  border-radius: $radius-full;
+  background: $color-online;
+  border: 2px solid $color-surface;
+}</code></pre>
+      <p>Guarda. Si tienes <code>ng serve</code> corriendo, el fondo de la página ya debería cambiar de color (blanco a un gris muy claro).</p>
+    </section>
+
+    <!-- ================================================== -->
+    <section class="section" id="parte7">
+      <h2 class="section__title">Parte 7 — Construir cada componente</h2>
+      <p>
+        Vamos a crear 5 componentes, en este orden: primero los 4 que no
+        dependen de nadie más (<code>chat-list</code>, <code>chat-header</code>,
+        <code>message-thread</code>, <code>message-input</code>), y al
+        final el que los junta a todos (<code>app-shell</code>).
+      </p>
+      <div class="note">
+        <strong>Un detalle técnico importante antes de empezar:</strong>
+        cada componente Angular queda "envuelto" en su propia etiqueta
+        (como <code>&lt;app-chat-list&gt;</code>). Esa etiqueta, por
+        defecto, puede romper el diseño flexible que ya armamos en el
+        maquetado. Por eso, en cada componente vamos a agregar esta línea
+        al inicio de su archivo <code>.scss</code>:
+        <pre><code>:host {
+  display: contents;
+}</code></pre>
+        Le dice al navegador "ignora esta etiqueta para efectos de diseño,
+        compórtate como si el contenido de adentro estuviera directamente
+        aquí". Ya está incluida en el código de abajo — no la olvides si
+        en algún momento el diseño se ve raro.
+      </div>
+
+      <h3>7.1 — ChatListComponent (la lista de chats)</h3>
+      <p>En la terminal, dentro de la carpeta <code>chat-app</code>:</p>
+      <pre><code>ng generate component chat-list</code></pre>
+      <p>Esto crea la carpeta <code>src/app/chat-list/</code> con 4 archivos. Solo vamos a tocar 2: el <code>.html</code> y el <code>.scss</code>.</p>
+      <p>Abre <code>src/app/chat-list/chat-list.component.html</code>, borra todo, pega esto:</p>
+      <pre><code>&lt;aside class="sidebar"&gt;
+  &lt;header class="sidebar__header"&gt;
+    &lt;h1 class="sidebar__title"&gt;Chats&lt;/h1&gt;
+    &lt;input
+      class="sidebar__search"
+      type="search"
+      placeholder="Buscar o empezar un chat nuevo"
+      aria-label="Buscar chats"
+    /&gt;
+  &lt;/header&gt;
+
+  &lt;ul class="chat-list"&gt;
+    &lt;li&gt;
+      &lt;button class="chat-list__item chat-list__item--active" aria-current="true"&gt;
+        &lt;span class="avatar avatar--1"&gt;AT&lt;span class="avatar__status" aria-hidden="true"&gt;&lt;/span&gt;&lt;/span&gt;
+        &lt;span class="chat-list__body"&gt;
+          &lt;span class="chat-list__row"&gt;
+            &lt;span class="chat-list__name"&gt;Ana Torres&lt;/span&gt;
+            &lt;span class="chat-list__time"&gt;12:45&lt;/span&gt;
+          &lt;/span&gt;
+          &lt;span class="chat-list__preview"&gt;Perfecto, nos vemos mañana entonces 👍&lt;/span&gt;
+        &lt;/span&gt;
+      &lt;/button&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+      &lt;button class="chat-list__item"&gt;
+        &lt;span class="avatar avatar--2"&gt;EQ&lt;/span&gt;
+        &lt;span class="chat-list__body"&gt;
+          &lt;span class="chat-list__row"&gt;
+            &lt;span class="chat-list__name"&gt;Equipo Angular — Principios&lt;/span&gt;
+            &lt;span class="chat-list__time"&gt;11:20&lt;/span&gt;
+          &lt;/span&gt;
+          &lt;span class="chat-list__preview"&gt;Diego: ya subí mi parte del sidebar&lt;/span&gt;
+        &lt;/span&gt;
+        &lt;span class="chat-list__badge" aria-label="3 mensajes sin leer"&gt;3&lt;/span&gt;
+      &lt;/button&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+      &lt;button class="chat-list__item"&gt;
+        &lt;span class="avatar avatar--3"&gt;LR&lt;/span&gt;
+        &lt;span class="chat-list__body"&gt;
+          &lt;span class="chat-list__row"&gt;
+            &lt;span class="chat-list__name"&gt;Luis Ramírez&lt;/span&gt;
+            &lt;span class="chat-list__time"&gt;Ayer&lt;/span&gt;
+          &lt;/span&gt;
+          &lt;span class="chat-list__preview"&gt;Te mando el enlace del repo&lt;/span&gt;
+        &lt;/span&gt;
+      &lt;/button&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+      &lt;button class="chat-list__item"&gt;
+        &lt;span class="avatar avatar--4"&gt;MP&lt;/span&gt;
+        &lt;span class="chat-list__body"&gt;
+          &lt;span class="chat-list__row"&gt;
+            &lt;span class="chat-list__name"&gt;Marta Pineda&lt;/span&gt;
+            &lt;span class="chat-list__time"&gt;Ayer&lt;/span&gt;
+          &lt;/span&gt;
+          &lt;span class="chat-list__preview"&gt;Ok, reviso el maquetado hoy en la tarde&lt;/span&gt;
+        &lt;/span&gt;
+      &lt;/button&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+      &lt;button class="chat-list__item"&gt;
+        &lt;span class="avatar avatar--5"&gt;CG&lt;/span&gt;
+        &lt;span class="chat-list__body"&gt;
+          &lt;span class="chat-list__row"&gt;
+            &lt;span class="chat-list__name"&gt;Carlos Gómez&lt;/span&gt;
+            &lt;span class="chat-list__time"&gt;Lun&lt;/span&gt;
+          &lt;/span&gt;
+          &lt;span class="chat-list__preview"&gt;Vale, quedamos así&lt;/span&gt;
+        &lt;/span&gt;
+      &lt;/button&gt;
+    &lt;/li&gt;
+    &lt;li&gt;
+      &lt;button class="chat-list__item"&gt;
+        &lt;span class="avatar avatar--6"&gt;SV&lt;/span&gt;
+        &lt;span class="chat-list__body"&gt;
+          &lt;span class="chat-list__row"&gt;
+            &lt;span class="chat-list__name"&gt;Sofía Vega&lt;/span&gt;
+            &lt;span class="chat-list__time"&gt;Lun&lt;/span&gt;
+          &lt;/span&gt;
+          &lt;span class="chat-list__preview"&gt;Buenísimo el ejemplo de breakpoints&lt;/span&gt;
+        &lt;/span&gt;
+      &lt;/button&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/aside&gt;</code></pre>
+      <p>Ahora abre <code>src/app/chat-list/chat-list.component.scss</code>, borra todo, pega esto:</p>
+      <pre><code>@use '../shared/variables' as *;
+@use '../shared/mixins' as *;
+
+:host {
+  display: contents;
+}
+
+.sidebar {
+  display: none;
+}
+
+@include bp-tablet-up {
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    width: 320px;
+    flex-shrink: 0;
+    border-right: 1px solid $color-border;
+  }
+}
+
+@include bp-car-up {
+  .sidebar {
+    width: 360px;
+  }
+}
+
+.sidebar__header {
+  padding: $space-4;
+  display: flex;
+  flex-direction: column;
+  gap: $space-3;
+  border-bottom: 1px solid $color-border;
+}
+
+.sidebar__title {
+  font-size: $font-size-lg;
+  font-weight: 700;
+  color: $color-primary-dark;
+}
+
+.sidebar__search {
+  width: 100%;
+  padding: $space-2 $space-3;
+  border: 1px solid $color-border;
+  border-radius: $radius-sm;
+  background: $color-bg;
+  font-size: $font-size-sm;
+  color: $color-text;
+  transition: border-color $transition-fast;
+
+  &::placeholder {
+    color: $color-text-muted;
+  }
+
+  &:focus {
+    border-color: $color-primary;
+  }
+}
+
+.chat-list {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.chat-list__item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  padding: $space-3 $space-4;
+  text-align: left;
+  border-bottom: 1px solid $color-border;
+  transition: background-color $transition-fast;
+
+  &:hover,
+  &:focus-visible {
+    background: $color-bg;
+  }
+
+  &.chat-list__item--active {
+    border-left: 3px solid $color-primary;
+    background: $color-bg;
+  }
+}
+
+.chat-list__body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.chat-list__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: $space-2;
+}
+
+.chat-list__name {
+  font-size: $font-size-md;
+  font-weight: 600;
+  color: $color-text;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chat-list__time {
+  font-size: $font-size-sm;
+  color: $color-text-muted;
+  flex-shrink: 0;
+}
+
+.chat-list__preview {
+  font-size: $font-size-sm;
+  color: $color-text-muted;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chat-list__badge {
+  flex-shrink: 0;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 $space-2;
+  border-radius: $radius-full;
+  background: $color-accent;
+  color: $color-text-on-primary;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}</code></pre>
+      <p>Guarda ambos archivos. No necesitas tocar <code>chat-list.component.ts</code> — el que generó Angular ya sirve tal cual.</p>
+
+      <h3>7.2 — ChatHeaderComponent</h3>
+      <pre><code>ng generate component chat-header</code></pre>
+      <p>Contenido de <code>chat-header.component.html</code>:</p>
+      <pre><code>&lt;header class="chat__header"&gt;
+  &lt;button class="chat__header-back" aria-label="Volver a la lista de chats"&gt;
+    &lt;svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;
+      &lt;path d="M15 18l-6-6 6-6" /&gt;
+    &lt;/svg&gt;
+  &lt;/button&gt;
+
+  &lt;span class="avatar avatar--1"&gt;AT&lt;span class="avatar__status" aria-hidden="true"&gt;&lt;/span&gt;&lt;/span&gt;
+
+  &lt;div class="chat__header-info"&gt;
+    &lt;span class="chat__header-name"&gt;Ana Torres&lt;/span&gt;
+    &lt;span class="chat__header-subtitle"&gt;En línea&lt;/span&gt;
+  &lt;/div&gt;
+
+  &lt;div class="chat__header-actions"&gt;
+    &lt;button class="chat__header-action" aria-label="Llamar"&gt;
+      &lt;svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;
+        &lt;path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" /&gt;
+      &lt;/svg&gt;
+    &lt;/button&gt;
+    &lt;button class="chat__header-action" aria-label="Videollamada"&gt;
+      &lt;svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;
+        &lt;path d="M23 7l-7 5 7 5V7z" /&gt;&lt;rect x="1" y="5" width="15" height="14" rx="2" /&gt;
+      &lt;/svg&gt;
+    &lt;/button&gt;
+    &lt;button class="chat__header-action" aria-label="Más opciones"&gt;
+      &lt;svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"&gt;
+        &lt;circle cx="12" cy="5" r="1.6" /&gt;&lt;circle cx="12" cy="12" r="1.6" /&gt;&lt;circle cx="12" cy="19" r="1.6" /&gt;
+      &lt;/svg&gt;
+    &lt;/button&gt;
+  &lt;/div&gt;
+&lt;/header&gt;</code></pre>
+      <p>Contenido de <code>chat-header.component.scss</code>:</p>
+      <pre><code>@use '../shared/variables' as *;
+@use '../shared/mixins' as *;
+
+:host {
+  display: contents;
+}
+
+.chat__header {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: $space-3;
+  padding: $space-3 $space-4;
+  border-bottom: 1px solid $color-border;
+  background: $color-surface;
+}
+
+.chat__header-back {
+  display: inline-flex;
+  padding: $space-1;
+
+  @include bp-tablet-up {
+    display: none;
+  }
+}
+
+.chat__header-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat__header-name {
+  font-size: $font-size-md;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chat__header-subtitle {
+  font-size: $font-size-sm;
+  color: $color-text-muted;
+}
+
+.chat__header-actions {
+  flex-shrink: 0;
+  display: flex;
+  gap: $space-2;
+}
+
+.chat__header-action {
+  width: 36px;
+  height: 36px;
+  border-radius: $radius-full;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: $color-primary-dark;
+  transition: background-color $transition-fast;
+
+  &:hover,
+  &:focus-visible {
+    background: $color-bg;
+  }
+}
+
+@include bp-car-up {
+  .chat__header {
+    padding: $space-4 $space-5;
+  }
+
+  .chat__header-action {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+@include bp-tv-up {
+  .chat__header-name {
+    font-size: $font-size-lg;
+  }
+}
+
+@include bp-watch-only {
+  .chat__header-subtitle,
+  .chat__header-actions {
+    display: none;
+  }
+}</code></pre>
+
+      <h3>7.3 — MessageThreadComponent</h3>
+      <pre><code>ng generate component message-thread</code></pre>
+      <p>Contenido de <code>message-thread.component.html</code>:</p>
+      <pre><code>&lt;div class="chat__messages"&gt;
+  &lt;span class="message-date-divider"&gt;Hoy&lt;/span&gt;
+
+  &lt;div class="bubble-row"&gt;
+    &lt;div class="bubble bubble--received"&gt;
+      &lt;p class="bubble__text"&gt;Hola, ¿cómo va el maquetado del chat?&lt;/p&gt;
+      &lt;span class="bubble__meta"&gt;12:40&lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class="bubble-row bubble-row--sent"&gt;
+    &lt;div class="bubble bubble--sent"&gt;
+      &lt;p class="bubble__text"&gt;Va bien, ya tengo el sidebar y las burbujas de mensaje listas&lt;/p&gt;
+      &lt;span class="bubble__meta"&gt;12:42&lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class="bubble-row bubble-row--sent"&gt;
+    &lt;div class="bubble bubble--sent"&gt;
+      &lt;p class="bubble__text"&gt;Falta probar reloj, auto y TV&lt;/p&gt;
+      &lt;span class="bubble__meta"&gt;12:42 ✓✓&lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class="bubble-row"&gt;
+    &lt;div class="bubble bubble--received"&gt;
+      &lt;p class="bubble__text"&gt;Perfecto, nos vemos mañana entonces 👍&lt;/p&gt;
+      &lt;span class="bubble__meta"&gt;12:45&lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+      <p>Contenido de <code>message-thread.component.scss</code>:</p>
+      <pre><code>@use '../shared/variables' as *;
+@use '../shared/mixins' as *;
+
+:host {
+  display: contents;
+}
+
+.chat__messages {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: $space-4;
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.message-date-divider {
+  align-self: center;
+  margin: $space-3 0;
+  padding: $space-1 $space-3;
+  border-radius: $radius-full;
+  background: $color-bg;
+  color: $color-text-muted;
+  font-size: $font-size-sm;
+}
+
+.bubble-row {
+  display: flex;
+
+  &.bubble-row--sent {
+    justify-content: flex-end;
+  }
+}
+
+.bubble {
+  max-width: 70%;
+  padding: $space-2 $space-3;
+  border-radius: $radius-md;
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+}
+
+.bubble__text {
+  font-size: $font-size-base;
+  line-height: 1.4;
+  word-wrap: break-word;
+}
+
+.bubble__meta {
+  align-self: flex-end;
+  font-size: 0.6875rem;
+  display: flex;
+  align-items: center;
+  gap: $space-1;
+}
+
+.bubble--received {
+  background: $color-bubble-received;
+  color: $color-text;
+
+  .bubble__meta {
+    color: $color-text-muted;
+  }
+}
+
+.bubble--sent {
+  background: $color-primary;
+  color: $color-text-on-primary;
+
+  .bubble__meta {
+    color: rgba(255, 255, 255, 0.75);
+  }
+}
+
+@include bp-car-up {
+  .bubble__text {
+    font-size: $font-size-md;
+  }
+}
+
+@include bp-tv-up {
+  .chat__messages {
+    padding: $space-5;
+  }
+
+  .bubble__text {
+    font-size: $font-size-md;
+  }
+}
+
+@include bp-watch-only {
+  .chat__messages {
+    padding: $space-2;
+  }
+
+  .bubble {
+    max-width: 92%;
+  }
+}</code></pre>
+
+      <h3>7.4 — MessageInputComponent</h3>
+      <pre><code>ng generate component message-input</code></pre>
+      <p>Contenido de <code>message-input.component.html</code>:</p>
+      <pre><code>&lt;form class="message-input"&gt;
+  &lt;div class="message-input__actions"&gt;
+    &lt;button type="button" class="message-input__action" aria-label="Insertar emoji"&gt;
+      &lt;svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;
+        &lt;circle cx="12" cy="12" r="10" /&gt;
+        &lt;path d="M8 14s1.5 2 4 2 4-2 4-2" /&gt;
+        &lt;line x1="9" y1="9" x2="9.01" y2="9" /&gt;&lt;line x1="15" y1="9" x2="15.01" y2="9" /&gt;
+      &lt;/svg&gt;
+    &lt;/button&gt;
+    &lt;button type="button" class="message-input__action" aria-label="Adjuntar archivo"&gt;
+      &lt;svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;
+        &lt;path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48" /&gt;
+      &lt;/svg&gt;
+    &lt;/button&gt;
+  &lt;/div&gt;
+
+  &lt;input
+    class="message-input__field"
+    type="text"
+    placeholder="Escribe un mensaje"
+    aria-label="Escribe un mensaje"
+  /&gt;
+
+  &lt;button type="submit" class="message-input__send" aria-label="Enviar mensaje"&gt;
+    &lt;svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"&gt;
+      &lt;line x1="22" y1="2" x2="11" y2="13" /&gt;&lt;polygon points="22 2 15 22 11 13 2 9 22 2" /&gt;
+    &lt;/svg&gt;
+  &lt;/button&gt;
+&lt;/form&gt;</code></pre>
+      <p>Contenido de <code>message-input.component.scss</code>:</p>
+      <pre><code>@use '../shared/variables' as *;
+@use '../shared/mixins' as *;
+
+:host {
+  display: contents;
+}
+
+.message-input {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: $space-2;
+  padding: $space-3 $space-4;
+  border-top: 1px solid $color-border;
+  background: $color-surface;
+}
+
+.message-input__actions {
+  display: flex;
+  gap: $space-1;
+}
+
+.message-input__action {
+  width: 36px;
+  height: 36px;
+  border-radius: $radius-full;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: $color-text-muted;
+  transition: background-color $transition-fast;
+
+  &:hover,
+  &:focus-visible {
+    background: $color-bg;
+  }
+}
+
+.message-input__field {
+  flex: 1;
+  padding: $space-2 $space-4;
+  border: 1px solid $color-border;
+  border-radius: $radius-full;
+  background: $color-bg;
+  font-family: inherit;
+  font-size: $font-size-base;
+  color: $color-text;
+  transition: border-color $transition-fast;
+
+  &::placeholder {
+    color: $color-text-muted;
+  }
+
+  &:focus {
+    border-color: $color-primary;
+  }
+}
+
+.message-input__send {
+  width: 40px;
+  height: 40px;
+  border-radius: $radius-full;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: $color-primary;
+  color: $color-text-on-primary;
+  transition: background-color $transition-fast;
+
+  &:hover,
+  &:focus-visible {
+    background: $color-primary-dark;
+  }
+}
+
+@include bp-car-up {
+  .message-input {
+    padding: $space-4 $space-5;
+  }
+
+  .message-input__field {
+    padding: $space-3 $space-4;
+    font-size: $font-size-md;
+  }
+
+  .message-input__send {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+@include bp-watch-only {
+  .message-input {
+    padding: $space-2;
+  }
+
+  .message-input__field {
+    padding: $space-1 $space-3;
+    font-size: $font-size-sm;
+  }
+
+  .message-input__actions {
+    display: none;
+  }
+}</code></pre>
+
+      <h3>7.5 — AppShellComponent (el que junta a todos)</h3>
+      <pre><code>ng generate component app-shell</code></pre>
+      <p>Contenido de <code>app-shell.component.html</code> — aquí NO copiamos texto del maquetado tal cual, sino que usamos las etiquetas de los 4 componentes que ya creaste:</p>
+      <pre><code>&lt;div class="app"&gt;
+  &lt;app-chat-list&gt;&lt;/app-chat-list&gt;
+
+  &lt;main class="chat"&gt;
+    &lt;app-chat-header&gt;&lt;/app-chat-header&gt;
+    &lt;app-message-thread&gt;&lt;/app-message-thread&gt;
+    &lt;app-message-input&gt;&lt;/app-message-input&gt;
+  &lt;/main&gt;
+&lt;/div&gt;</code></pre>
+      <p>Contenido de <code>app-shell.component.scss</code>:</p>
+      <pre><code>@use '../shared/variables' as *;
+@use '../shared/mixins' as *;
+
+.app {
+  height: 100vh;
+  background: $color-surface;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.chat {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+@include bp-tablet-up {
+  .app {
+    flex-direction: row;
+  }
+
+  .chat {
+    flex: 1;
+    min-width: 0;
+  }
+}</code></pre>
+      <p>
+        Ahora abre <code>app-shell.component.ts</code>. Reemplaza TODO su
+        contenido por esto (junta las piezas que ya existen):
+      </p>
+      <pre><code>import { Component } from '@angular/core';
+import { ChatListComponent } from '../chat-list/chat-list.component';
+import { ChatHeaderComponent } from '../chat-header/chat-header.component';
+import { MessageThreadComponent } from '../message-thread/message-thread.component';
+import { MessageInputComponent } from '../message-input/message-input.component';
+
+@Component({
+  selector: 'app-app-shell',
+  standalone: true,
+  imports: [ChatListComponent, ChatHeaderComponent, MessageThreadComponent, MessageInputComponent],
+  templateUrl: './app-shell.component.html',
+  styleUrl: './app-shell.component.scss'
+})
+export class AppShellComponent {}</code></pre>
+      <div class="note">
+        Si tu archivo generado se ve un poco distinto (por ejemplo sin la
+        línea <code>standalone: true</code>), no pasa nada — es normal
+        entre versiones de Angular. Lo importante es que quede el import
+        de los 4 componentes arriba, y sus nombres dentro de
+        <code>imports: [...]</code>.
+      </div>
+
+      <h3>7.6 — Conectar todo en la raíz</h3>
+      <p>
+        Por último, abre <code>src/app/app.component.html</code>, borra
+        todo su contenido, y deja solo:
+      </p>
+      <pre><code>&lt;app-app-shell&gt;&lt;/app-app-shell&gt;</code></pre>
+      <p>
+        Abre <code>src/app/app.component.ts</code>. Busca la línea que
+        empieza con <code>import { Component }</code> y, justo debajo,
+        agrega:
+      </p>
+      <pre><code>import { AppShellComponent } from './app-shell/app-shell.component';</code></pre>
+      <p>
+        Después, busca la línea que dice <code>imports: [...]</code>
+        (adentro del <code>@Component({...})</code>) y cámbiala para que
+        quede:
+      </p>
+      <pre><code>imports: [AppShellComponent],</code></pre>
+      <p>Guarda todos los archivos abiertos (Ctrl+K, S en VS Code guarda todos a la vez).</p>
+      <div class="note">
+        <strong>✅ Validación:</strong> con <code>ng serve</code> corriendo,
+        ve a <code>http://localhost:4200</code> — deberías ver el chat
+        completo: la lista de chats a la izquierda, la conversación a la
+        derecha, tal como en el <a href="../maquetado/">maquetado</a>.
+      </div>
+    </section>
+
+    <!-- ================================================== -->
+    <section class="section" id="parte8">
+      <h2 class="section__title">Parte 8 — Validación visual final</h2>
+      <p>Con <code>ng serve</code> corriendo y el navegador abierto en <code>localhost:4200</code>:</p>
+      <ul class="checklist">
+        <li><input type="checkbox" id="v1" /><label for="v1">Se ve la lista de chats con los 6 contactos y sus avatares de colores</label></li>
+        <li><input type="checkbox" id="v2" /><label for="v2">Se ve el chat de "Ana Torres" con las 4 burbujas de mensaje (2 a la izquierda, 2 a la derecha)</label></li>
+        <li><input type="checkbox" id="v3" /><label for="v3">Presiona F12 (herramientas de desarrollador) → pestaña "Console" → no hay texto en rojo (errores)</label></li>
+        <li><input type="checkbox" id="v4" /><label for="v4">En F12, activa el ícono de "toggle device toolbar" (un teléfono/tablet) y prueba distintos anchos — a partir de 600px debe aparecer el sidebar junto al chat; por debajo, solo el chat</label></li>
+        <li><input type="checkbox" id="v5" /><label for="v5">Achica la ventana a menos de 260px de ancho (o usa un tamaño personalizado en el device toolbar) — el subtítulo "En línea" y los íconos de llamada/video deben desaparecer</label></li>
+      </ul>
+      <p>Compara contra el <a href="../maquetado/">maquetado original</a> — deberían verse iguales en cada tamaño.</p>
+    </section>
+
+    <!-- ================================================== -->
+    <section class="section" id="parte9">
+      <h2 class="section__title">Parte 9 — Guardar y subir tu trabajo</h2>
+      <p>Con todo funcionando, guarda tu progreso en git. En la terminal (dentro de la carpeta <code>chat-app</code>):</p>
+      <pre><code>git add .
+git commit -m "feat: migrar componentes del maquetado a Angular"</code></pre>
+      <p>
+        Si <code>chat-app</code> quedó DENTRO del repositorio
+        <code>principios-angular</code> (como en la Parte 4), puedes subir
+        los cambios con:
+      </p>
+      <pre><code>git push</code></pre>
+      <div class="note">
+        La primera vez que hagas <code>git push</code>, es posible que se
+        abra una ventana pidiéndote iniciar sesión en GitHub — sigue las
+        instrucciones en pantalla (se abre tu navegador, inicias sesión,
+        y vuelves a la terminal).
+      </div>
+    </section>
+
+    <!-- ================================================== -->
+    <section class="section" id="siguientes">
+      <h2 class="section__title">¿Qué sigue?</h2>
+      <p>
+        Con esto tienes el proyecto completo funcionando. Ideas para
+        seguir practicando:
+      </p>
+      <ul>
+        <li><strong>Bonus:</strong> migra también <code>ContactInfoComponent</code> (el panel de info de contacto que solo se ve en TV) — repite el mismo patrón que usaste con los otros 5, usando <code>maquetado/scss/_chat-info.scss</code> y el bloque <code>&lt;aside class="chat-info"&gt;</code> de <code>maquetado/index.html</code></li>
+        <li>Haz que el botón "Enviar" realmente agregue un mensaje nuevo a la lista (esto ya necesita un <em>signal</em> — ver la sección de <a href="index.html#conceptos">conceptos clave</a> de la guía de setup)</li>
+        <li>Haz que al hacer clic en un chat de la lista, cambie cuál aparece como activo</li>
+      </ul>
+    </section>
+
+    <footer class="footer">
+      Ver también: <a href="index.html">guía de setup de Angular</a> · <a href="diagrama-componentes.html">diagrama de componentes</a> · <a href="../PLAN.md">PLAN.md</a>
+    </footer>
+  </div>
+</body>
+</html>

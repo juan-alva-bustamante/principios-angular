@@ -77,6 +77,8 @@ Contenido de la guía:
 
 ## Fase 3 — Repo base de Angular
 
+Tutorial completo, paso a paso: [`guia-angular/tutorial-paso-a-paso.html`](guia-angular/tutorial-paso-a-paso.html) — desde instalar Node.js hasta el proyecto Angular funcionando, con el contenido exacto de cada archivo.
+
 Diagrama de referencia: [`guia-angular/diagrama-componentes.html`](guia-angular/diagrama-componentes.html) — mapea cada región del maquetado a su componente Angular y carpeta en `src/app/`.
 
 - `ng new` con las opciones definidas en la guía de Fase 2
