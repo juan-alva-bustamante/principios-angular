@@ -55,14 +55,8 @@ La interfaz se diseñó para verse bien en 5 tipos de pantalla, no solo teléfon
 | 🚗 Auto (infotainment) | 1024–1280px |
 | 📺 TV | ≥ 1281px |
 
-## Cómo ver el maquetado y la guía localmente
+## Cómo ver el maquetado y la guía
 
-Cada carpeta (`maquetado/` y `guia-angular/`) tiene su propio `package.json` con `sass` como única dependencia:
+El CSS ya viene compilado y commiteado, así que `maquetado/index.html` y `guia-angular/index.html` se pueden abrir directamente (doble clic, o el botón "Raw"/preview de GitHub) sin instalar nada.
 
-```bash
-cd maquetado      # o cd guia-angular
-npm install
-npm run build:css
-```
-
-Luego abre su `index.html` en el navegador. Instrucciones completas en el `README.md` de cada carpeta.
+Solo necesitas `npm install && npm run build:css` (dentro de `maquetado/` o `guia-angular/`) si vas a **editar** los archivos `.scss` — instrucciones completas en el `README.md` de cada carpeta.

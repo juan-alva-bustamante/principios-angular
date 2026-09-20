@@ -6,11 +6,13 @@ Un solo `index.html` + un solo `scss/styles.scss`, sin JavaScript — es un docu
 
 ## Cómo verla
 
+`css/styles.css` ya está compilado y commiteado en el repo, así que puedes abrir `index.html` directamente (doble clic, o desde el preview de GitHub) sin instalar nada ni correr ningún servidor.
+
+Eso sí: `css/styles.css` es un archivo generado — **no lo edites a mano**. Si necesitas cambiar estilos, edita `scss/styles.scss` y recompílalo:
+
 ```bash
 npm install
 npm run build:css
 ```
 
-Luego abre `index.html` en el navegador.
-
-Mientras edites `scss/styles.scss`, puedes dejar corriendo `npm run watch:css` y solo recargar la página al guardar.
+O, mientras editas, deja corriendo `npm run watch:css` y solo recarga la página al guardar. Antes de subir tu cambio a git, corre `npm run build:css` una vez más y commitea también el `css/styles.css` actualizado.

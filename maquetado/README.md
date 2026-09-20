@@ -4,20 +4,16 @@ Maquetado estático en HTML + SCSS de la interfaz de chat (ver [`../PLAN.md`](..
 
 ## Cómo verlo
 
+`css/main.css` ya está compilado y commiteado en el repo, así que puedes abrir `index.html` directamente (doble clic, o desde el preview de GitHub) sin instalar nada ni correr ningún servidor.
+
+Eso sí: `css/main.css` es un archivo generado a partir de `scss/main.scss` — **no lo edites a mano**, tus cambios se perderían en el siguiente `build:css`. Si necesitas cambiar estilos:
+
 ```bash
 npm install
 npm run build:css
 ```
 
-Esto compila `scss/main.scss` → `css/main.css`. Luego abre `index.html` en el navegador (o sirve la carpeta con cualquier servidor estático, por ejemplo `npx serve`).
-
-Mientras edites estilos, deja corriendo:
-
-```bash
-npm run watch:css
-```
-
-y solo recarga la página cada vez que guardes un archivo `.scss`.
+O, mientras editas, deja corriendo `npm run watch:css` y solo recarga la página al guardar cada `.scss`. Antes de subir tu cambio a git, corre `npm run build:css` una vez más y commitea también el `css/main.css` actualizado.
 
 ## Estructura
 
@@ -36,7 +32,7 @@ maquetado/
 │   ├── _chat-info.scss           # panel de info de contacto (solo TV)
 │   ├── _responsive-overrides.scss # overrides entre componentes (se importa AL FINAL, ver comentario dentro)
 │   └── main.scss                 # punto de entrada, compila a css/main.css
-└── css/main.css                  # generado, no editar a mano
+└── css/main.css                  # generado y commiteado, no editar a mano
 ```
 
 ## Quién edita qué (equipo de 4)
