@@ -6,7 +6,9 @@ Un solo `index.html` + un solo `scss/styles.scss`, sin JavaScript — es un docu
 
 ## Cómo verla
 
-`css/styles.css` ya está compilado y commiteado en el repo, así que puedes abrir `index.html` directamente (doble clic, o desde el preview de GitHub) sin instalar nada ni correr ningún servidor.
+**En línea (recomendado):** https://juan-alva-bustamante.github.io/principios-angular/guia-angular/
+
+También puedes abrirla local: `css/styles.css` ya está compilado y commiteado en el repo, así que puedes abrir `index.html` directamente (doble clic) sin instalar nada ni correr ningún servidor. (Evita los visores externos tipo "GitHub HTML preview": no resuelven bien las rutas relativas al CSS — usa el link de GitHub Pages de arriba.)
 
 Eso sí: `css/styles.css` es un archivo generado — **no lo edites a mano**. Si necesitas cambiar estilos, edita `scss/styles.scss` y recompílalo:
 

@@ -4,7 +4,9 @@ Maquetado estático en HTML + SCSS de la interfaz de chat (ver [`../PLAN.md`](..
 
 ## Cómo verlo
 
-`css/main.css` ya está compilado y commiteado en el repo, así que puedes abrir `index.html` directamente (doble clic, o desde el preview de GitHub) sin instalar nada ni correr ningún servidor.
+**En línea (recomendado):** https://juan-alva-bustamante.github.io/principios-angular/maquetado/
+
+También puedes abrirlo local: `css/main.css` ya está compilado y commiteado en el repo, así que puedes abrir `index.html` directamente (doble clic) sin instalar nada ni correr ningún servidor. (Evita los visores externos tipo "GitHub HTML preview": no resuelven bien las rutas relativas al CSS — usa el link de GitHub Pages de arriba.)
 
 Eso sí: `css/main.css` es un archivo generado a partir de `scss/main.scss` — **no lo edites a mano**, tus cambios se perderían en el siguiente `build:css`. Si necesitas cambiar estilos:
 

@@ -57,6 +57,11 @@ La interfaz se diseñó para verse bien en 5 tipos de pantalla, no solo teléfon
 
 ## Cómo ver el maquetado y la guía
 
-El CSS ya viene compilado y commiteado, así que `maquetado/index.html` y `guia-angular/index.html` se pueden abrir directamente (doble clic, o el botón "Raw"/preview de GitHub) sin instalar nada.
+El repo está publicado con **GitHub Pages** — ábrelo directo, con estilos, sin instalar nada:
 
-Solo necesitas `npm install && npm run build:css` (dentro de `maquetado/` o `guia-angular/`) si vas a **editar** los archivos `.scss` — instrucciones completas en el `README.md` de cada carpeta.
+- Maquetado (Fase 1): **https://juan-alva-bustamante.github.io/principios-angular/maquetado/**
+- Guía de Angular (Fase 2): **https://juan-alva-bustamante.github.io/principios-angular/guia-angular/**
+
+(Los visores externos tipo "GitHub HTML preview" no funcionan bien aquí: sirven el HTML pero no resuelven las rutas relativas al CSS. Usa los links de arriba en su lugar.)
+
+También puedes abrir `maquetado/index.html` o `guia-angular/index.html` directo en tu máquina (doble clic) — el CSS ya viene compilado y commiteado. Solo necesitas `npm install && npm run build:css` (dentro de `maquetado/` o `guia-angular/`) si vas a **editar** los archivos `.scss` — instrucciones completas en el `README.md` de cada carpeta.
