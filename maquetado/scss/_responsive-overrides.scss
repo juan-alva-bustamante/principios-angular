@@ -1,6 +1,5 @@
 // ============================================================
 // OVERRIDES RESPONSIVOS ENTRE COMPONENTES
-// Dueño: Persona 1 (integrador/a)
 //
 // Por qué existe este archivo: en CSS, si dos reglas tienen la
 // MISMA especificidad (ej. dos selectores de una sola clase como
@@ -10,9 +9,9 @@
 // en main.scss: cualquier regla de acá pisa a las de
 // _chat-header.scss, _message-input.scss, etc.
 //
-// Regla práctica para el equipo: si necesitas ocultar/ajustar
-// ALGO QUE OTRA PERSONA HIZO según el breakpoint, ese ajuste va
-// aquí, no dentro del archivo de esa otra persona.
+// Regla práctica: si necesitas ocultar/ajustar algo de OTRO
+// componente según el breakpoint, ese ajuste va aquí, no dentro
+// del archivo de ese componente.
 // ============================================================
 @use 'mixins' as *;
 

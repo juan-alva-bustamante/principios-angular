@@ -1,6 +1,6 @@
 # Principios Angular
 
-Proyecto de aprendizaje en equipo (4 personas, todas nuevas en Angular): aprender Angular construyendo entre todos una interfaz de mensajería en vivo (estilo WhatsApp), responsiva para **teléfono, tablet, TV, auto y reloj inteligente**.
+Proyecto de aprendizaje individual (nuevo en Angular): aprender Angular construyendo una interfaz de mensajería en vivo (estilo WhatsApp), responsiva para **teléfono, tablet, TV, auto y reloj inteligente**.
 
 El plan completo, con el detalle de cada fase, está en **[PLAN.md](PLAN.md)**. Este README es solo el mapa rápido del repo.
 
@@ -10,15 +10,15 @@ No se salta directo a Angular. Se avanza en 3 fases secuenciales, cada una valid
 
 | Fase | Qué es | Estado | Carpeta |
 |---|---|---|---|
-| 1 | Maquetado HTML/SCSS del chat, repartido por componentes entre las 4 personas | ✅ Hecho | [`maquetado/`](maquetado/) |
-| 2 | Guía de setup de Angular: conceptos, instalación de herramientas, reparto de componentes, convenciones del equipo | ✅ Hecho | [`guia-angular/`](guia-angular/) |
-| 3 | Repo base de Angular (creado a partir de lo definido en la Fase 2), con la estructura de componentes lista para que cada persona integre su parte | ⬜ Pendiente | — |
+| 1 | Maquetado HTML/SCSS del chat, dividido por componentes | ✅ Hecho | [`maquetado/`](maquetado/) |
+| 2 | Guía de setup de Angular: conceptos, instalación de herramientas, componentes, convenciones | ✅ Hecho | [`guia-angular/`](guia-angular/) |
+| 3 | Repo base de Angular (creado a partir de lo definido en la Fase 2), con la estructura de componentes lista para integrar cada parte | ⬜ Pendiente | — |
 
 ## Estructura del repositorio
 
 ```
 principios-angular/
-├── PLAN.md                # el plan completo, con el reparto de componentes y los breakpoints
+├── PLAN.md                # el plan completo, con los componentes y los breakpoints
 ├── maquetado/              # Fase 1 — HTML + SCSS del chat (sin Angular todavía)
 │   ├── index.html
 │   ├── scss/               # un archivo por componente, ver maquetado/README.md
@@ -30,18 +30,19 @@ principios-angular/
 └── .claude/launch.json      # sirve maquetado/ y guia-angular/ localmente para previsualizarlos
 ```
 
-## Equipo (4 personas)
+## Componentes de la interfaz
 
-El mismo reparto se usa en el maquetado (Fase 1) y se traslada 1:1 a los componentes de Angular (Fase 2 y 3):
+El mismo desglose se usa en el maquetado (Fase 1) y se traslada 1:1 a los componentes de Angular (Fase 2 y 3):
 
-| Persona | Parte de la interfaz |
+| Componente | Parte de la interfaz |
 |---|---|
-| 1 (integrador/a) | Layout base / app shell, navegación adaptativa, panel de info de contacto (TV) |
-| 2 | Sidebar — lista de chats |
-| 3 | Header del chat activo + barra de entrada de mensaje |
-| 4 | Hilo de mensajes (burbujas) |
+| App shell / layout | Estructura general, navegación adaptativa, panel de info de contacto (TV) |
+| Sidebar | Lista de chats |
+| Chat header | Header del chat activo |
+| Message input | Barra de entrada de mensaje |
+| Message thread | Hilo de mensajes (burbujas) |
 
-Detalle completo (incluyendo el mapeo a componentes de Angular y carpetas) en [PLAN.md](PLAN.md) y en la sección "Reparto de componentes por persona" de la [guía de Angular](guia-angular/index.html).
+Detalle completo (incluyendo el mapeo a componentes de Angular y carpetas) en [PLAN.md](PLAN.md) y en la sección "Componentes de Angular" de la [guía de Angular](guia-angular/index.html).
 
 ## Dispositivos y breakpoints
 

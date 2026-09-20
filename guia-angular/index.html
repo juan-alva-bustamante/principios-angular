@@ -13,7 +13,7 @@
       <p class="hero__eyebrow">Fase 2 — antes de crear el repo de Angular</p>
       <h1 class="hero__title">Guía de setup de Angular</h1>
       <p class="hero__subtitle">
-        Para el equipo de 4 personas del proyecto de aprendizaje (ver
+        Para el proyecto de aprendizaje individual (ver
         <a href="../PLAN.md">PLAN.md</a>). Esta guía no crea el proyecto
         todavía — eso pasa en la Fase 3. Aquí instalamos herramientas,
         aprendemos los conceptos mínimos y dejamos claras las
@@ -25,13 +25,13 @@
       <p class="toc__title">Contenido</p>
       <ol>
         <li><a href="#conceptos">Conceptos clave de Angular</a></li>
-        <li><a href="#reparto">Reparto de componentes por persona</a></li>
+        <li><a href="#reparto">Componentes de Angular</a></li>
         <li><a href="#requisitos">Requisitos previos</a></li>
         <li><a href="#cli">Instalar Angular CLI</a></li>
         <li><a href="#proyecto">Crear el proyecto (referencia para la Fase 3)</a></li>
         <li><a href="#estructura">Estructura de carpetas</a></li>
         <li><a href="#comandos">Comandos del día a día</a></li>
-        <li><a href="#stack">Stack y convenciones del equipo</a></li>
+        <li><a href="#stack">Stack y convenciones</a></li>
         <li><a href="#git">Flujo de Git</a></li>
         <li><a href="#checklist">Checklist antes de la Fase 3</a></li>
       </ol>
@@ -127,64 +127,69 @@
 
     <!-- ================================================== -->
     <section class="section" id="reparto">
-      <h2 class="section__title">2. Reparto de componentes por persona</h2>
+      <h2 class="section__title">2. Componentes de Angular</h2>
       <p>
-        Mismo reparto que ya usamos para el maquetado en la Fase 1 (ver
+        Mismo desglose que ya usamos para el maquetado en la Fase 1 (ver
         <a href="../PLAN.md">PLAN.md</a>), aplicado ahora a los componentes
-        de Angular que se van a crear en la Fase 3. Cada quien es dueño de
-        su carpeta dentro de <code>src/app/</code>: crea sus propios
-        archivos con <code>ng generate component</code> (ver
-        <a href="#comandos">Comandos del día a día</a>) y trabaja en su
-        propia rama de Git (ver <a href="#git">Flujo de Git</a>).
+        de Angular que se van a crear en la Fase 3. Cada uno vive en su
+        propia carpeta dentro de <code>src/app/</code>, generada con
+        <code>ng generate component</code> (ver
+        <a href="#comandos">Comandos del día a día</a>). Diagrama:
+        <a href="diagrama-componentes.html">ver cómo queda cada región del maquetado mapeada a su componente →</a>
       </p>
       <div class="table-wrap">
         <table>
           <thead>
-            <tr><th>Persona</th><th>Componente(s) Angular</th><th>Carpeta en <code>src/app/</code></th></tr>
+            <tr><th>Orden</th><th>Componente Angular</th><th>Carpeta en <code>src/app/</code></th></tr>
           </thead>
           <tbody>
             <tr>
-              <td><strong>1</strong> (integrador/a)</td>
-              <td><code>AppShellComponent</code>, <code>ContactInfoComponent</code>, navegación adaptativa</td>
-              <td><code>app-shell/</code>, <code>contact-info/</code></td>
+              <td>1</td>
+              <td><code>AppShellComponent</code> — estructura general, navegación adaptativa</td>
+              <td><code>app-shell/</code></td>
             </tr>
             <tr>
-              <td><strong>2</strong></td>
+              <td>2</td>
               <td><code>ChatListComponent</code> (+ <code>ChatListItemComponent</code>)</td>
               <td><code>chat-list/</code></td>
             </tr>
             <tr>
-              <td><strong>3</strong></td>
-              <td><code>ChatHeaderComponent</code>, <code>MessageInputComponent</code></td>
-              <td><code>chat-header/</code>, <code>message-input/</code></td>
+              <td>3</td>
+              <td><code>ChatHeaderComponent</code></td>
+              <td><code>chat-header/</code></td>
             </tr>
             <tr>
-              <td><strong>4</strong></td>
+              <td>4</td>
               <td><code>MessageThreadComponent</code> (+ <code>MessageBubbleComponent</code>)</td>
               <td><code>message-thread/</code></td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td><code>MessageInputComponent</code></td>
+              <td><code>message-input/</code></td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td><code>ContactInfoComponent</code> — panel de info de contacto (TV)</td>
+              <td><code>contact-info/</code></td>
             </tr>
           </tbody>
         </table>
       </div>
       <div class="note">
-        <strong>Por qué el mismo reparto:</strong> cada persona ya conoce
-        su bloque de HTML/SCSS del maquetado — migrarlo a un componente
-        Angular es más simple si es la misma persona que lo diseñó
-        quien lo convierte, en vez de repartir de cero.
+        <strong>Por qué este orden:</strong> el <code>AppShellComponent</code>
+        va primero porque los demás se montan dentro de él. Después el
+        <code>ChatListComponent</code>, porque es la pantalla inicial.
+        El resto sigue el mismo orden en el que ya se construyó el
+        maquetado en la Fase 1 — cada bloque de HTML/SCSS ya validado se
+        migra a su propio componente, uno a la vez.
       </div>
-      <p>
-        La persona 1, además de sus propios componentes, es quien deja
-        listo el esqueleto del proyecto (Fase 3) para que los demás
-        empiecen a trabajar sobre él — por eso le tocan las piezas
-        "estructurales" (el shell de la app y la navegación adaptativa
-        entre dispositivos).
-      </p>
     </section>
 
     <!-- ================================================== -->
     <section class="section" id="requisitos">
       <h2 class="section__title">3. Requisitos previos</h2>
-      <p>Instala esto en orden. Cada quien lo hace en su propia máquina.</p>
+      <p>Instala esto en orden, en tu máquina.</p>
 
       <h3>1. Node.js (versión LTS)</h3>
       <p>
@@ -257,12 +262,11 @@ npm -v</code></pre>
     <section class="section" id="proyecto">
       <h2 class="section__title">5. Crear el proyecto (referencia para la Fase 3)</h2>
       <p>
-        Este paso <strong>no lo hacemos todavía</strong> — lo hará quien
-        cree el repo base en la Fase 3. Se documenta aquí para que todos
-        entiendan qué comando se va a correr y por qué, antes de que
-        exista.
+        Este paso <strong>no lo hacemos todavía</strong> — se hace al crear
+        el repo base en la Fase 3. Se documenta aquí para tener claro qué
+        comando se va a correr y por qué, antes de que exista.
       </p>
-      <pre><code>npx @angular/cli@latest new chat-equipo --style=scss --routing</code></pre>
+      <pre><code>npx @angular/cli@latest new chat-app --style=scss --routing</code></pre>
       <div class="table-wrap">
         <table>
           <thead><tr><th>Opción</th><th>Qué hace</th></tr></thead>
@@ -279,7 +283,7 @@ npm -v</code></pre>
         por defecto de <code>ng new</code> y <code>ng generate</code>.
       </p>
       <p>Una vez creado, para levantar el servidor de desarrollo:</p>
-      <pre><code>cd chat-equipo
+      <pre><code>cd chat-app
 ng serve</code></pre>
       <p>y abrir <code>http://localhost:4200</code> en el navegador.</p>
     </section>
@@ -288,7 +292,7 @@ ng serve</code></pre>
     <section class="section" id="estructura">
       <h2 class="section__title">6. Estructura de carpetas</h2>
       <p>Así se ve un proyecto Angular recién creado (lo esencial):</p>
-      <pre><code>chat-equipo/
+      <pre><code>chat-app/
 ├── src/
 │   ├── app/
 │   │   ├── app.component.ts        # componente raíz
@@ -304,7 +308,7 @@ ng serve</code></pre>
 └── tsconfig.json                   # configuración de TypeScript</code></pre>
       <p>
         En la Fase 3, dentro de <code>src/app/</code> vamos a crear una
-        carpeta por componente (siguiendo el reparto de la Fase 1):
+        carpeta por componente (siguiendo el orden de la Fase 1):
         <code>chat-list/</code>, <code>chat-header/</code>,
         <code>message-thread/</code>, <code>message-input/</code>, etc.
         Cada carpeta de componente trae junto su <code>.ts</code>,
@@ -338,14 +342,14 @@ ng serve</code></pre>
 
     <!-- ================================================== -->
     <section class="section" id="stack">
-      <h2 class="section__title">8. Stack y convenciones del equipo</h2>
+      <h2 class="section__title">8. Stack y convenciones</h2>
       <p>Decisiones ya tomadas para que en la Fase 3 no haya que discutirlas de nuevo:</p>
       <ul>
         <li><strong>Componentes standalone</strong>, no <code>NgModule</code> (ver <a href="#conceptos">Conceptos clave</a>)</li>
         <li><strong>SCSS</strong> para estilos, un archivo por componente — igual que en el maquetado</li>
         <li><strong>Angular Router</strong> para navegar entre la lista de chats y una conversación</li>
         <li><strong>Signals</strong> para el estado (mensajes, chat activo, etc.), en vez de librerías externas como NgRx — para un proyecto de aprendizaje, es más que suficiente y más fácil de entender</li>
-        <li><strong>ESLint + Prettier</strong> para mantener el código consistente entre los 4</li>
+        <li><strong>ESLint + Prettier</strong> para mantener el código consistente</li>
       </ul>
 
       <h3>Nomenclatura de archivos</h3>
@@ -361,7 +365,7 @@ ng serve</code></pre>
     <!-- ================================================== -->
     <section class="section" id="git">
       <h2 class="section__title">9. Flujo de Git</h2>
-      <p>Mismo espíritu que usamos en el maquetado: una rama por persona/componente, PR para integrar.</p>
+      <p>Mismo espíritu que usamos en el maquetado: una rama por componente, para mantener el historial ordenado y poder revisar cada uno por separado antes de integrarlo.</p>
 
       <h3>Nombres de rama</h3>
       <pre><code>feature/chat-list
@@ -387,7 +391,7 @@ feature/message-input</code></pre>
 git add .
 git commit -m "feat: agregar componente de header del chat"
 git push -u origin feature/chat-header</code></pre>
-      <p>Después se abre un Pull Request hacia <code>main</code> y alguien más del equipo lo revisa antes de integrarlo.</p>
+      <p>Después se abre un Pull Request hacia <code>main</code> — aunque trabajes solo, sirve para revisar el diff completo del componente antes de integrarlo, no solo confiar en el ojo mientras escribes.</p>
     </section>
 
     <!-- ================================================== -->
@@ -397,14 +401,13 @@ git push -u origin feature/chat-header</code></pre>
         <li><input type="checkbox" id="chk-node" /><label for="chk-node">Node.js LTS instalado (<code>node -v</code> funciona)</label></li>
         <li><input type="checkbox" id="chk-cli" /><label for="chk-cli">Angular CLI instalado (<code>ng version</code> funciona)</label></li>
         <li><input type="checkbox" id="chk-vscode" /><label for="chk-vscode">VS Code con Angular Language Service, ESLint y Prettier</label></li>
-        <li><input type="checkbox" id="chk-git" /><label for="chk-git">Git instalado y acceso al repositorio del equipo</label></li>
+        <li><input type="checkbox" id="chk-git" /><label for="chk-git">Git instalado y acceso al repositorio</label></li>
         <li><input type="checkbox" id="chk-conceptos" /><label for="chk-conceptos">Leíste la sección de conceptos clave (componente, standalone, signal)</label></li>
       </ul>
       <div class="warning">
-        <strong>Antes de seguir:</strong> las 4 personas deben completar
-        este checklist. La Fase 3 crea el repo base y solo tiene sentido
-        una vez que todos pueden correr <code>ng serve</code> en su
-        máquina.
+        <strong>Antes de seguir:</strong> completa este checklist. La Fase 3
+        crea el repo base y solo tiene sentido una vez que puedas correr
+        <code>ng serve</code> en tu máquina.
       </div>
     </section>
 

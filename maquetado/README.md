@@ -1,6 +1,6 @@
 # Maquetado — Fase 1
 
-Maquetado estático en HTML + SCSS de la interfaz de chat (ver [`../PLAN.md`](../PLAN.md)). Todavía no hay Angular: esto es lo que se valida en equipo antes de pasar a la Fase 2.
+Maquetado estático en HTML + SCSS de la interfaz de chat (ver [`../PLAN.md`](../PLAN.md)). Todavía no hay Angular: esto es lo que se valida antes de pasar a la Fase 2.
 
 ## Cómo verlo
 
@@ -37,18 +37,20 @@ maquetado/
 └── css/main.css                  # generado y commiteado, no editar a mano
 ```
 
-## Quién edita qué (equipo de 4)
+## Qué archivo edita cada componente
 
-| Persona | Archivo(s) SCSS | Bloque en `index.html` |
+| Componente | Archivo(s) SCSS | Bloque en `index.html` |
 |---|---|---|
-| 1 (integrador/a) | `_layout.scss`, `_chat-info.scss`, `_responsive-overrides.scss` | `<div class="app">`, `<aside class="chat-info">` |
-| 2 | `_sidebar.scss` | `<aside class="sidebar">` |
-| 3 | `_chat-header.scss`, `_message-input.scss` | `<header class="chat__header">`, `<form class="message-input">` |
-| 4 | `_messages.scss` | `<div class="chat__messages">` |
+| App shell / layout | `_layout.scss`, `_responsive-overrides.scss` | `<div class="app">` |
+| Panel de info de contacto (TV) | `_chat-info.scss` | `<aside class="chat-info">` |
+| Sidebar — lista de chats | `_sidebar.scss` | `<aside class="sidebar">` |
+| Header del chat activo | `_chat-header.scss` | `<header class="chat__header">` |
+| Barra de entrada | `_message-input.scss` | `<form class="message-input">` |
+| Hilo de mensajes | `_messages.scss` | `<div class="chat__messages">` |
 
-El `index.html` ya está completo con contenido de ejemplo y comentarios (`<!-- PERSONA N — ... -->`) marcando cada bloque, para que cada quien lo use de referencia y no haya que "repartir" el archivo físicamente: todos pueden editar su sección con git (una rama por persona + PR).
+El `index.html` ya está completo con contenido de ejemplo y comentarios marcando cada bloque, para que sea fácil ubicar qué HTML corresponde a qué archivo SCSS (y, más adelante, a qué componente de Angular).
 
-**Regla importante de CSS:** si necesitas cambiar cómo se ve el componente de otra persona según el dispositivo (ej. "en reloj, ocultar el botón X del header"), ese ajuste va en `_responsive-overrides.scss`, no en el archivo de esa persona. Está explicado (el porqué) en un comentario dentro de ese archivo — es un bug real de cascada CSS en el que ya caímos al construir este maquetado.
+**Regla importante de CSS:** si necesitas cambiar cómo se ve un componente según el dispositivo (ej. "en reloj, ocultar el botón X del header"), ese ajuste va en `_responsive-overrides.scss`, no en el archivo de ese componente. Está explicado (el porqué) en un comentario dentro de ese archivo — es un bug real de cascada CSS en el que ya caí al construir este maquetado.
 
 ## Breakpoints
 
@@ -76,5 +78,4 @@ Ver la tabla completa en [`../PLAN.md`](../PLAN.md). Resumen:
 - [x] Se ve bien en los 5 breakpoints (reloj, teléfono, tablet, auto, TV) — probado en DevTools
 - [x] HTML semántico
 - [x] Sin errores de consola
-- [ ] Revisado por las 4 personas del equipo
 - [ ] Probado con contenido "real" adicional (nombres muy largos, chat sin mensajes, chat con muchísimos mensajes)

@@ -1,13 +1,13 @@
 # Plan de aprendizaje: Angular a través de una UI de mensajería en vivo
 
-**Equipo:** 4 personas (todas nuevas en Angular)
-**Objetivo:** aprender Angular construyendo, en equipo, una interfaz de mensajería en vivo (estilo WhatsApp), responsiva para teléfono, tablet, TV, auto y reloj inteligente.
+**Autor/a:** 1 persona (nueva en Angular)
+**Objetivo:** aprender Angular construyendo una interfaz de mensajería en vivo (estilo WhatsApp), responsiva para teléfono, tablet, TV, auto y reloj inteligente.
 
 **Regla de oro del proceso:** no saltar directo a Angular. Se avanza en 3 fases secuenciales, cada una validada antes de pasar a la siguiente.
 
 ---
 
-## Fase 1 — Maquetado HTML/CSS (repartido por componentes)
+## Fase 1 — Maquetado HTML/CSS (por componentes)
 
 ### Estructura de la interfaz
 
@@ -23,16 +23,17 @@
 └─────────────┴──────────────────────────┘
 ```
 
-### Reparto de componentes (4 personas)
+### Componentes a construir
 
-| Persona | Componente(s) | Contenido |
-|---|---|---|
-| **1 (integrador/a)** | Layout base / Shell + Navegación adaptativa | Grid general, variables CSS (colores, tipografía), breakpoints responsivos, bottom nav para móvil, estado vacío ("selecciona un chat"), transiciones entre vistas |
-| **2** | Sidebar — Lista de chats | Buscador, item de chat (avatar, nombre, último mensaje, hora, badge de no leídos) |
-| **3** | Header del chat activo + Barra de entrada de mensaje | Avatar, nombre, estado ("en línea"), iconos de llamada/video/menú — Input de texto, emoji, adjuntar, botón enviar |
-| **4** | Hilo de mensajes | Burbujas enviado/recibido, separador de fecha, hora, check de leído |
+| Componente | Contenido |
+|---|---|
+| Layout base / Shell + Navegación adaptativa | Grid general, variables CSS (colores, tipografía), breakpoints responsivos, bottom nav para móvil, estado vacío ("selecciona un chat"), transiciones entre vistas |
+| Sidebar — Lista de chats | Buscador, item de chat (avatar, nombre, último mensaje, hora, badge de no leídos) |
+| Header del chat activo | Avatar, nombre, estado ("en línea"), iconos de llamada/video/menú |
+| Barra de entrada de mensaje | Input de texto, emoji, adjuntar, botón enviar |
+| Hilo de mensajes | Burbujas enviado/recibido, separador de fecha, hora, check de leído |
 
-Cada persona trabaja su propio archivo CSS (`sidebar.css`, `messages.css`, etc.) y su bloque de HTML delimitado con comentarios claros (`<!-- INICIO: chat-header -->` / `<!-- FIN: chat-header -->`), para integrarlos luego en un solo `index.html` sin pisarse entre sí.
+Cada componente vive en su propio archivo CSS (`sidebar.css`, `messages.css`, etc.) y su bloque de HTML está delimitado con comentarios claros, para que sea fácil ubicar qué HTML corresponde a qué archivo — y más adelante, a qué componente de Angular.
 
 ### Breakpoints responsivos
 
@@ -70,23 +71,25 @@ Contenido de la guía:
 - Instalación de Angular CLI y comandos básicos (`ng new`, `ng generate component`, `ng serve`)
 - Estructura de carpetas de un proyecto Angular explicada
 - Stack a usar: standalone components (enfoque moderno, más simple para empezar), SCSS, Angular Router, Signals para estado (se evita NgRx por ahora), ESLint + Prettier
-- Convención de commits y flujo de git para el equipo (rama por componente + PRs)
+- Convención de commits y flujo de git (rama por componente)
 
 ---
 
 ## Fase 3 — Repo base de Angular
 
+Diagrama de referencia: [`guia-angular/diagrama-componentes.html`](guia-angular/diagrama-componentes.html) — mapea cada región del maquetado a su componente Angular y carpeta en `src/app/`.
+
 - `ng new` con las opciones definidas en la guía de Fase 2
-- Estructura de carpetas/componentes que refleja 1:1 los componentes del maquetado de Fase 1 (cada persona migra su HTML/CSS ya validado a su componente Angular)
-- Componentes generados como placeholders (vacíos o con el maquetado ya movido) para que cada quien complete la lógica
-- README con instrucciones de clonado/setup y convenciones
-- La integración final (routing, comunicación entre componentes, servicios) queda a cargo del equipo, no se resuelve en esta etapa
+- Estructura de carpetas/componentes que refleja 1:1 los componentes del maquetado de Fase 1 (se migra cada bloque de HTML/CSS ya validado a su propio componente Angular, uno a la vez)
+- Componentes generados como placeholders (vacíos o con el maquetado ya movido) para completar la lógica después
+- README con instrucciones de setup y convenciones
+- La integración final (routing, comunicación entre componentes, servicios) se resuelve en esta fase, componente por componente
 
 ---
 
 ## Estado actual
 
-- [x] Plan aprobado (equipo de 4 personas)
-- [ ] Fase 1: maquetado HTML/CSS
-- [ ] Fase 2: guía de setup de Angular
+- [x] Plan aprobado (proyecto individual)
+- [x] Fase 1: maquetado HTML/CSS
+- [x] Fase 2: guía de setup de Angular
 - [ ] Fase 3: repo base de Angular

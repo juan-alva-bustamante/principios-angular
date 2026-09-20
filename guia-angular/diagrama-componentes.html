@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Componentes de Angular — mapeo desde el maquetado</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --paper:#f6f6f4;
+    --ink:#1d1d1f;
+    --muted:#6e6e73;
+    --rule:rgba(29,29,31,0.12);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Geist', -apple-system, sans-serif;
+  }
+  .page{
+    max-width:1160px;
+    margin:0 auto;
+    padding:48px 32px 40px;
+  }
+  .eyebrow{
+    font-family:'Geist Mono', monospace;
+    font-size:11px;
+    font-weight:500;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin:0 0 12px;
+  }
+  h1{
+    font-family:'Instrument Serif', serif;
+    font-weight:400;
+    font-size:2.25rem;
+    letter-spacing:-0.01em;
+    margin:0 0 12px;
+  }
+  .subtitle{
+    font-size:15px;
+    color:var(--muted);
+    max-width:640px;
+    line-height:1.5;
+    margin:0 0 8px;
+  }
+  .subtitle a{ color:var(--ink); }
+  .diagram-wrap{
+    margin-top:32px;
+    overflow-x:auto;
+  }
+  svg{ display:block; width:100%; height:auto; }
+  footer{
+    margin-top:24px;
+    padding-top:16px;
+    border-top:1px solid var(--rule);
+    font-family:'Geist Mono', monospace;
+    font-size:11px;
+    color:var(--muted);
+  }
+  footer a{ color:var(--muted); }
+</style>
+</head>
+<body>
+  <div class="page">
+    <p class="eyebrow">Principios Angular — Fase 1 → Fase 3</p>
+    <h1>Del maquetado a los componentes de Angular</h1>
+    <p class="subtitle">
+      Cada región del maquetado (<a href="../maquetado/">Fase 1</a>) se
+      convierte en su propio componente Angular en la Fase 3, con el mismo
+      nombre de carpeta dentro de <code>src/app/</code>. Ver la tabla
+      completa en la <a href="index.html#reparto">guía de Angular</a>.
+    </p>
+
+    <div class="diagram-wrap">
+<svg viewBox="0 0 1080 620" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="componentes-angular-title componentes-angular-desc">
+<title id="componentes-angular-title">Componentes de Angular a partir del maquetado del chat</title>
+<desc id="componentes-angular-desc">Maquetado del chat con cada región — shell general, lista de chats, header del chat, hilo de mensajes y barra de entrada — señalada hacia el nombre de su futuro componente Angular y su carpeta en src/app/.</desc>
+
+<rect width="1080" height="620" fill="#f6f6f4"/>
+
+<!-- ===================== MOCKUP (izquierda) ===================== -->
+
+<!-- AppShellComponent — contenedor exterior -->
+<rect x="40" y="40" width="460" height="520" rx="8" fill="rgba(46,90,168,0.04)" stroke="#2e5aa8" stroke-width="1.5"/>
+
+<!-- Sidebar — ChatListComponent -->
+<rect x="48" y="48" width="140" height="504" rx="6" fill="rgba(110,100,121,0.05)" stroke="#6e6479" stroke-width="1.2"/>
+<rect x="60" y="60" width="116" height="16" rx="8" fill="#ffffff" stroke="rgba(29,29,31,0.15)" stroke-width="0.8"/>
+<!-- 6 filas de contacto -->
+<g fill="none">
+  <circle cx="76" cy="96" r="8" fill="rgba(29,29,31,0.15)"/>
+  <rect x="92" y="91" width="56" height="4" rx="2" fill="rgba(29,29,31,0.35)"/>
+  <rect x="92" y="99" width="80" height="3" rx="1.5" fill="rgba(29,29,31,0.15)"/>
+
+  <circle cx="76" cy="136" r="8" fill="rgba(29,29,31,0.15)"/>
+  <rect x="92" y="131" width="56" height="4" rx="2" fill="rgba(29,29,31,0.35)"/>
+  <rect x="92" y="139" width="80" height="3" rx="1.5" fill="rgba(29,29,31,0.15)"/>
+
+  <circle cx="76" cy="176" r="8" fill="rgba(29,29,31,0.15)"/>
+  <rect x="92" y="171" width="56" height="4" rx="2" fill="rgba(29,29,31,0.35)"/>
+  <rect x="92" y="179" width="80" height="3" rx="1.5" fill="rgba(29,29,31,0.15)"/>
+
+  <circle cx="76" cy="216" r="8" fill="rgba(29,29,31,0.15)"/>
+  <rect x="92" y="211" width="56" height="4" rx="2" fill="rgba(29,29,31,0.35)"/>
+  <rect x="92" y="219" width="80" height="3" rx="1.5" fill="rgba(29,29,31,0.15)"/>
+
+  <circle cx="76" cy="256" r="8" fill="rgba(29,29,31,0.15)"/>
+  <rect x="92" y="251" width="56" height="4" rx="2" fill="rgba(29,29,31,0.35)"/>
+  <rect x="92" y="259" width="80" height="3" rx="1.5" fill="rgba(29,29,31,0.15)"/>
+
+  <circle cx="76" cy="296" r="8" fill="rgba(29,29,31,0.15)"/>
+  <rect x="92" y="291" width="56" height="4" rx="2" fill="rgba(29,29,31,0.35)"/>
+  <rect x="92" y="299" width="80" height="3" rx="1.5" fill="rgba(29,29,31,0.15)"/>
+</g>
+
+<!-- ChatHeaderComponent -->
+<rect x="196" y="48" width="296" height="56" rx="6" fill="rgba(184,145,90,0.06)" stroke="#b8915a" stroke-width="1.2"/>
+<circle cx="224" cy="76" r="16" fill="rgba(29,29,31,0.15)"/>
+<rect x="252" y="64" width="72" height="5" rx="2" fill="rgba(29,29,31,0.4)"/>
+<rect x="252" y="76" width="48" height="4" rx="2" fill="rgba(29,29,31,0.18)"/>
+<rect x="428" y="68" width="12" height="12" rx="3" fill="none" stroke="rgba(29,29,31,0.3)" stroke-width="1"/>
+<rect x="444" y="68" width="12" height="12" rx="3" fill="none" stroke="rgba(29,29,31,0.3)" stroke-width="1"/>
+<rect x="460" y="68" width="12" height="12" rx="3" fill="none" stroke="rgba(29,29,31,0.3)" stroke-width="1"/>
+
+<!-- MessageThreadComponent -->
+<rect x="196" y="112" width="296" height="360" rx="6" fill="rgba(124,143,111,0.05)" stroke="#7c8f6f" stroke-width="1.2"/>
+<rect x="208" y="132" width="148" height="28" rx="10" fill="rgba(29,29,31,0.05)"/>
+<rect x="340" y="172" width="148" height="28" rx="10" fill="rgba(29,29,31,0.14)"/>
+<rect x="208" y="212" width="168" height="28" rx="10" fill="rgba(29,29,31,0.05)"/>
+<rect x="320" y="252" width="168" height="28" rx="10" fill="rgba(29,29,31,0.14)"/>
+
+<!-- MessageInputComponent -->
+<rect x="196" y="480" width="296" height="72" rx="6" fill="rgba(156,107,80,0.06)" stroke="#9c6b50" stroke-width="1.2"/>
+<rect x="208" y="504" width="216" height="24" rx="12" fill="#ffffff" stroke="rgba(29,29,31,0.15)" stroke-width="0.8"/>
+<circle cx="456" cy="516" r="16" fill="rgba(29,29,31,0.85)"/>
+
+<!-- ===================== CONECTORES ===================== -->
+<g fill="none" stroke-width="1.2">
+  <!-- AppShellComponent -->
+  <path d="M500,48 H624 Q630,48 630,54 V62 Q630,68 636,68 H760" stroke="#2e5aa8"/>
+  <!-- ChatListComponent (corredor superior, evita cruzar el resto) -->
+  <path d="M118,40 V34 Q118,28 124,28 H746 Q752,28 752,34 V142 Q752,148 758,148 H760" stroke="#6e6479"/>
+  <!-- ChatHeaderComponent -->
+  <path d="M492,76 H620 Q626,76 626,82 V222 Q626,228 632,228 H760" stroke="#b8915a"/>
+  <!-- MessageThreadComponent -->
+  <path d="M492,292 H620 Q626,292 626,298 V302 Q626,308 632,308 H760" stroke="#7c8f6f"/>
+  <!-- MessageInputComponent -->
+  <path d="M492,516 H620 Q626,516 626,510 V394 Q626,388 632,388 H760" stroke="#9c6b50"/>
+</g>
+
+<!-- puntos de anclaje -->
+<circle cx="500" cy="48" r="3" fill="#2e5aa8"/>
+<circle cx="118" cy="40" r="3" fill="#6e6479"/>
+<circle cx="492" cy="76" r="3" fill="#b8915a"/>
+<circle cx="492" cy="292" r="3" fill="#7c8f6f"/>
+<circle cx="492" cy="516" r="3" fill="#9c6b50"/>
+
+<!-- ===================== CHIPS (derecha) ===================== -->
+
+<!-- AppShellComponent -->
+<g>
+  <rect x="760" y="40" width="232" height="56" rx="8" fill="#ffffff" stroke="rgba(29,29,31,0.12)" stroke-width="1"/>
+  <rect x="760" y="40" width="4" height="56" fill="#2e5aa8"/>
+  <rect x="776" y="50" width="80" height="14" rx="3" fill="none" stroke="#2e5aa8" stroke-opacity="0.5" stroke-width="0.8"/>
+  <text x="816" y="60" fill="#2e5aa8" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">COMPONENT</text>
+  <text x="776" y="80" fill="#1d1d1f" font-size="13" font-weight="600" font-family="'Geist', sans-serif">AppShellComponent</text>
+  <text x="776" y="92" fill="#6e6e73" font-size="9" font-family="'Geist Mono', monospace">app-shell/</text>
+</g>
+
+<!-- ChatListComponent -->
+<g>
+  <rect x="760" y="120" width="232" height="56" rx="8" fill="#ffffff" stroke="rgba(29,29,31,0.12)" stroke-width="1"/>
+  <rect x="760" y="120" width="4" height="56" fill="#6e6479"/>
+  <rect x="776" y="130" width="80" height="14" rx="3" fill="none" stroke="#6e6479" stroke-opacity="0.5" stroke-width="0.8"/>
+  <text x="816" y="140" fill="#6e6479" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">COMPONENT</text>
+  <text x="776" y="160" fill="#1d1d1f" font-size="13" font-weight="600" font-family="'Geist', sans-serif">ChatListComponent</text>
+  <text x="776" y="172" fill="#6e6e73" font-size="9" font-family="'Geist Mono', monospace">chat-list/</text>
+</g>
+
+<!-- ChatHeaderComponent -->
+<g>
+  <rect x="760" y="200" width="232" height="56" rx="8" fill="#ffffff" stroke="rgba(29,29,31,0.12)" stroke-width="1"/>
+  <rect x="760" y="200" width="4" height="56" fill="#b8915a"/>
+  <rect x="776" y="210" width="80" height="14" rx="3" fill="none" stroke="#b8915a" stroke-opacity="0.5" stroke-width="0.8"/>
+  <text x="816" y="220" fill="#b8915a" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">COMPONENT</text>
+  <text x="776" y="240" fill="#1d1d1f" font-size="13" font-weight="600" font-family="'Geist', sans-serif">ChatHeaderComponent</text>
+  <text x="776" y="252" fill="#6e6e73" font-size="9" font-family="'Geist Mono', monospace">chat-header/</text>
+</g>
+
+<!-- MessageThreadComponent -->
+<g>
+  <rect x="760" y="280" width="232" height="56" rx="8" fill="#ffffff" stroke="rgba(29,29,31,0.12)" stroke-width="1"/>
+  <rect x="760" y="280" width="4" height="56" fill="#7c8f6f"/>
+  <rect x="776" y="290" width="80" height="14" rx="3" fill="none" stroke="#7c8f6f" stroke-opacity="0.5" stroke-width="0.8"/>
+  <text x="816" y="300" fill="#7c8f6f" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">COMPONENT</text>
+  <text x="776" y="320" fill="#1d1d1f" font-size="13" font-weight="600" font-family="'Geist', sans-serif">MessageThreadComponent</text>
+  <text x="776" y="332" fill="#6e6e73" font-size="9" font-family="'Geist Mono', monospace">message-thread/</text>
+</g>
+
+<!-- MessageInputComponent -->
+<g>
+  <rect x="760" y="360" width="232" height="56" rx="8" fill="#ffffff" stroke="rgba(29,29,31,0.12)" stroke-width="1"/>
+  <rect x="760" y="360" width="4" height="56" fill="#9c6b50"/>
+  <rect x="776" y="370" width="80" height="14" rx="3" fill="none" stroke="#9c6b50" stroke-opacity="0.5" stroke-width="0.8"/>
+  <text x="816" y="380" fill="#9c6b50" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.08em">COMPONENT</text>
+  <text x="776" y="400" fill="#1d1d1f" font-size="13" font-weight="600" font-family="'Geist', sans-serif">MessageInputComponent</text>
+  <text x="776" y="412" fill="#6e6e73" font-size="9" font-family="'Geist Mono', monospace">message-input/</text>
+</g>
+
+</svg>
+    </div>
+
+    <footer>
+      Fase 3 · componentes generados con <code>ng generate component</code> dentro de <code>src/app/</code> — ver <a href="../PLAN.md">PLAN.md</a>
+    </footer>
+  </div>
+</body>
+</html>

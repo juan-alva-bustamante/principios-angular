@@ -1,7 +1,6 @@
 // ============================================================
-// TOKENS DE DISEÑO
-// Dueño: Persona 1 (integrador/a) — ver PLAN.md
-// Nadie más debería declarar colores/medidas "sueltas": todo
+// TOKENS DE DISEÑO — ver PLAN.md
+// Ningún otro archivo debería declarar colores/medidas "sueltas": todo
 // componente consume estos tokens para que el look sea consistente.
 // En Angular esto se vuelve un archivo de estilos globales
 // (styles.scss) que se importa una sola vez.
