@@ -1,0 +1,107 @@
+// ============================================================
+// LAYOUT / APP SHELL
+// Dueño: Persona 1 (integrador/a)
+// HTML que estiliza: <div class="app"> ... </div> en index.html
+// Futuro componente Angular: AppShellComponent (el que hace
+// <app-sidebar>, <router-outlet>/<app-chat>, <app-contact-info>)
+//
+// Aquí se decide el ÚNICO cambio estructural real entre
+// dispositivos: cuántas columnas se ven a la vez. El resto de los
+// componentes solo ajustan tamaños/paddings dentro de su columna.
+// ============================================================
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.app {
+  height: 100vh;
+  background: $color-surface;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+// --- Teléfono (base, mobile-first) ---
+// Una sola vista a la vez. Este maquetado estático muestra el
+// chat abierto (como si ya hubieras tocado un contacto); el
+// listado (.sidebar) se oculta. En Angular ese "cambio de vista"
+// lo resuelve el router (dos rutas) o un *ngIf con un signal.
+.sidebar {
+  display: none;
+}
+
+.chat-info {
+  display: none; // panel de info de contacto: solo aparece en TV
+}
+
+// El chat (header + mensajes + input) siempre es una columna
+// flex que ocupa el 100% de la altura disponible. Esto es lo que
+// permite que SOLO .chat__messages haga scroll interno y que el
+// header/input queden fijos arriba y abajo — en cualquier
+// dispositivo, no solo en tablet+.
+.chat {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+// --- Tablet en adelante: layout maestro-detalle de 2 columnas ---
+@include bp-tablet-up {
+  .app {
+    flex-direction: row;
+  }
+
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    width: 320px;
+    flex-shrink: 0;
+    border-right: 1px solid $color-border;
+  }
+
+  .chat {
+    flex: 1;
+    min-width: 0; // evita que el texto largo rompa el layout flex
+  }
+}
+
+// .chat__messages también necesita min-height: 0 para que el
+// overflow-y: auto (definido en _messages.scss) funcione dentro
+// de un contenedor flex — si no, el flex item se estira al alto
+// de su contenido y el scroll interno nunca se activa.
+.chat__messages {
+  min-height: 0;
+}
+
+// --- Auto: más aire y objetivos de toque más grandes ---
+// (el cambio de tamaño real vive en cada componente; aquí solo
+// ajustamos el ancho del listado para pantallas anchas de auto)
+@include bp-car-up {
+  .sidebar {
+    width: 360px;
+  }
+}
+
+// --- TV: 3 columnas, aparece el panel de info de contacto ---
+@include bp-tv-up {
+  .sidebar {
+    width: 380px;
+  }
+
+  .chat-info {
+    display: flex;
+    flex-direction: column;
+    width: 340px;
+    flex-shrink: 0;
+    border-left: 1px solid $color-border;
+  }
+}
+
+// El override de "reloj inteligente" que oculta piezas de otros
+// componentes (header, input) vive en _responsive-overrides.scss,
+// NO aquí. Motivo: en main.scss este archivo se importa antes que
+// _chat-header.scss y _message-input.scss, y con la misma
+// especificidad de selector gana quien va último en el CSS
+// compilado — si el "display: none" estuviera acá, esos
+// componentes lo pisarían sin querer. Ver ese archivo para el
+// detalle completo.

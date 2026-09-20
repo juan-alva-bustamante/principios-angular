@@ -1,0 +1,52 @@
+// ============================================================
+// PANEL DE INFO DE CONTACTO (solo aparece en TV, ver _layout.scss)
+// Dueño: Persona 1 (integrador/a)
+// HTML que estiliza: <aside class="chat-info"> ... </aside>
+// Futuro componente Angular: ContactInfoComponent
+//
+// Existe porque en una pantalla de TV sobra espacio horizontal:
+// en vez de estirar el chat al infinito, se usa esa columna extra
+// para mostrar contexto que en pantallas chicas no cabe.
+// ============================================================
+@use 'variables' as *;
+
+.chat-info {
+  align-items: center;
+  padding: $space-6 $space-4;
+  gap: $space-2;
+  text-align: center;
+}
+
+.chat-info__avatar {
+  width: 96px;
+  height: 96px;
+  font-size: $font-size-lg * 1.4;
+  margin-bottom: $space-3;
+}
+
+.chat-info__name {
+  font-size: $font-size-lg;
+  font-weight: 700;
+}
+
+.chat-info__detail {
+  color: $color-text-muted;
+  font-size: $font-size-base;
+}
+
+.chat-info__section {
+  width: 100%;
+  margin-top: $space-5;
+  padding-top: $space-4;
+  border-top: 1px solid $color-border;
+  text-align: left;
+}
+
+.chat-info__section-title {
+  font-size: $font-size-sm;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: $color-text-muted;
+  margin-bottom: $space-2;
+}

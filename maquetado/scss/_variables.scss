@@ -1,0 +1,75 @@
+// ============================================================
+// TOKENS DE DISEÑO
+// Dueño: Persona 1 (integrador/a) — ver PLAN.md
+// Nadie más debería declarar colores/medidas "sueltas": todo
+// componente consume estos tokens para que el look sea consistente.
+// En Angular esto se vuelve un archivo de estilos globales
+// (styles.scss) que se importa una sola vez.
+// ============================================================
+
+// --- Color ---
+// Paleta calmada, no-WhatsApp: azul pizarra como color primario,
+// coral solo para llamar la atención (no leídos / acento puntual).
+$color-bg:              #F7F7F5; // fondo general de la app
+$color-surface:         #FFFFFF; // tarjetas / paneles (sidebar, chat)
+$color-border:          #E4E7EB; // líneas divisorias sutiles
+
+$color-primary:         #3D5A80; // acento principal (burbuja enviada, activo)
+$color-primary-dark:    #293241; // texto fuerte / hover sobre primary
+$color-accent:          #EE6C4D; // uso puntual: badge de no leídos
+
+$color-text:            #1B1B1F; // texto principal
+$color-text-muted:      #6B7280; // texto secundario (hora, último mensaje)
+$color-text-on-primary: #FFFFFF; // texto sobre fondo $color-primary
+
+$color-bubble-received: #EEF0F3; // burbuja de mensaje recibido
+$color-online:          #2E9E5B; // punto de estado "en línea"
+
+// Paleta de avatares por iniciales (color determinístico por contacto,
+// NO decorativo al azar). En Angular será una función pura
+// nombre -> color, aquí se asigna la clase a mano en el HTML.
+$avatar-colors: (
+  1: #3D5A80,
+  2: #EE6C4D,
+  3: #7A9E7E,
+  4: #9B5DE5,
+  5: #E0A458,
+  6: #4D8FAC,
+);
+
+// --- Tipografía ---
+// Una sola familia para toda la app (simplicidad a propósito):
+// menos decisiones, más consistencia. Pesos: 400 texto, 500 énfasis
+// medio, 600/700 nombres y títulos.
+$font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+$font-size-sm:  0.8125rem; // 13px — hora, metadatos
+$font-size-base: 0.9375rem; // 15px — texto de mensajes/listado
+$font-size-md:  1.0625rem; // 17px — nombres de contacto
+$font-size-lg:  1.375rem;  // 22px — títulos (sidebar, panel TV)
+
+// --- Espaciado (escala de 4px) ---
+$space-1: 0.25rem; // 4px
+$space-2: 0.5rem;  // 8px
+$space-3: 0.75rem; // 12px
+$space-4: 1rem;    // 16px
+$space-5: 1.5rem;  // 24px
+$space-6: 2rem;    // 32px
+
+// --- Forma / profundidad ---
+$radius-sm: 8px;
+$radius-md: 14px;   // burbujas de mensaje
+$radius-full: 999px; // avatares, badges
+
+$shadow-panel: 0 1px 2px rgba(0, 0, 0, 0.06);
+
+// --- Movimiento ---
+// A propósito muy poco: solo transiciones cortas de color/estado,
+// nada de animaciones de entrada ni efectos vistosos.
+$transition-fast: 120ms ease;
+
+// --- Breakpoints (ver tabla completa en PLAN.md) ---
+$bp-watch-max: 260px;  // ⌚ reloj inteligente: ≤ 260px
+$bp-tablet:    600px;  // 📱 tablet: ≥ 600px
+$bp-car:       1024px; // 🚗 auto (infotainment): ≥ 1024px
+$bp-tv:        1281px; // 📺 TV: ≥ 1281px

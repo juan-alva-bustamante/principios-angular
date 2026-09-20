@@ -1,0 +1,12 @@
+{
+  "name": "maquetado-chat",
+  "private": true,
+  "description": "Maquetado estático HTML/SCSS del chat (Fase 1 del plan, ver ../PLAN.md). Sin Angular todavía.",
+  "scripts": {
+    "build:css": "sass scss/main.scss css/main.css --no-source-map",
+    "watch:css": "sass --watch scss/main.scss css/main.css --no-source-map"
+  },
+  "devDependencies": {
+    "sass": "^1.77.0"
+  }
+}

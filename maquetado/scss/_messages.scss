@@ -1,0 +1,108 @@
+// ============================================================
+// HILO DE MENSAJES
+// Dueño: Persona 4
+// HTML que estiliza: <div class="chat__messages"> ... </div>
+// Futuro componente Angular: MessageThreadComponent
+//   - .bubble  ->  MessageBubbleComponent (uno por @for)
+// ============================================================
+@use 'variables' as *;
+@use 'mixins' as *;
+
+.chat__messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: $space-4;
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+}
+
+.message-date-divider {
+  align-self: center;
+  margin: $space-3 0;
+  padding: $space-1 $space-3;
+  border-radius: $radius-full;
+  background: $color-bg;
+  color: $color-text-muted;
+  font-size: $font-size-sm;
+}
+
+.bubble-row {
+  display: flex;
+
+  &.bubble-row--sent {
+    justify-content: flex-end;
+  }
+}
+
+.bubble {
+  max-width: 70%;
+  padding: $space-2 $space-3;
+  border-radius: $radius-md;
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+}
+
+.bubble__text {
+  font-size: $font-size-base;
+  line-height: 1.4;
+  word-wrap: break-word;
+}
+
+.bubble__meta {
+  align-self: flex-end;
+  font-size: 0.6875rem;
+  display: flex;
+  align-items: center;
+  gap: $space-1;
+}
+
+// Recibido: superficie neutra, texto normal.
+.bubble--received {
+  background: $color-bubble-received;
+  color: $color-text;
+
+  .bubble__meta {
+    color: $color-text-muted;
+  }
+}
+
+// Enviado: único lugar (junto al badge) donde se usa color fuerte
+// de fondo, para que sea obvio de un vistazo quién dijo qué.
+.bubble--sent {
+  background: $color-primary;
+  color: $color-text-on-primary;
+
+  .bubble__meta {
+    color: rgba(255, 255, 255, 0.75);
+  }
+}
+
+// --- Auto / TV: mensajes más legibles a distancia o "de reojo" ---
+@include bp-car-up {
+  .bubble__text {
+    font-size: $font-size-md;
+  }
+}
+
+@include bp-tv-up {
+  .chat__messages {
+    padding: $space-5;
+  }
+
+  .bubble__text {
+    font-size: $font-size-md;
+  }
+}
+
+// --- Reloj: solo se ve el último mensaje, ocupa casi todo el ancho ---
+@include bp-watch-only {
+  .chat__messages {
+    padding: $space-2;
+  }
+
+  .bubble {
+    max-width: 92%;
+  }
+}

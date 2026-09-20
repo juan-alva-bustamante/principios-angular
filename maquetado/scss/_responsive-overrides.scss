@@ -1,0 +1,28 @@
+// ============================================================
+// OVERRIDES RESPONSIVOS ENTRE COMPONENTES
+// Dueño: Persona 1 (integrador/a)
+//
+// Por qué existe este archivo: en CSS, si dos reglas tienen la
+// MISMA especificidad (ej. dos selectores de una sola clase como
+// ".chat__header-actions"), gana la que aparece último en el
+// archivo final — sin importar si una está dentro de un
+// @media y la otra no. Por eso este archivo se importa AL FINAL
+// en main.scss: cualquier regla de acá pisa a las de
+// _chat-header.scss, _message-input.scss, etc.
+//
+// Regla práctica para el equipo: si necesitas ocultar/ajustar
+// ALGO QUE OTRA PERSONA HIZO según el breakpoint, ese ajuste va
+// aquí, no dentro del archivo de esa otra persona.
+// ============================================================
+@use 'mixins' as *;
+
+// ⌚ Reloj inteligente: solo lo esencial (avatar, último mensaje,
+// campo de texto). Se quitan subtítulo de estado y los botones
+// secundarios de header/input.
+@include bp-watch-only {
+  .chat__header-subtitle,
+  .chat__header-actions,
+  .message-input__actions {
+    display: none;
+  }
+}
